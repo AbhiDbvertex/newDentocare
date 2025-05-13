@@ -1,0 +1,71 @@
+{
+  "project_info": {
+    "project_number": "497693569074",
+    "firebase_url": "https://pearllinedentocare-95c6a-default-rtdb.firebaseio.com",
+    "project_id": "pearllinedentocare-95c6a",
+    "storage_bucket": "pearllinedentocare-95c6a.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:497693569074:android:751c36b0dba9ac48740c2b",
+        "android_client_info": {
+          "package_name": "com.dbvertex.pearllinedentocare"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "497693569074-e7vu9s0ic7jijllosnf43nd5e6klj135.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.dbvertex.pearllinedentocare",
+            "certificate_hash": "742fd0a729bacb5f60dc3444a49bdf0b844d10a5"
+          }
+        },
+        {
+          "client_id": "497693569074-hh6a9qohr56637j8q9gfllrk9irvmvbs.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.dbvertex.pearllinedentocare",
+            "certificate_hash": "6697cd81b01e6a14456ba0d151aa98f91f93833d"
+          }
+        },
+        {
+          "client_id": "497693569074-n8da2d3ig6hhdm4edhefka1kst5j9k53.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.dbvertex.pearllinedentocare",
+            "certificate_hash": "a1b51f6b54b43a37f0884d7a28f6ae02b5f97363"
+          }
+        },
+        {
+          "client_id": "497693569074-5bjjp1b8npi9b5jhict6ib274kvlul81.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDGs7Y3dVSvffs5Fpdl_mm-twGDgsVRQyQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "497693569074-5bjjp1b8npi9b5jhict6ib274kvlul81.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "497693569074-4amipo1kq48e155d2vr1dedch1ch5ldl.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.dbvertex.pearllinedentocare.pearllinedentocare"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
