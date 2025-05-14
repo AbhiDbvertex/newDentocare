@@ -92,59 +92,7 @@ class LoginController extends GetxController {
     }
   }
 
-  // Future<SignUpDto?> login() async {
-  //   if (check() == false) {
-  //     return null;
-  //   }
-  //   debugPrint("logindebug" + "called");
-  //   util.startLoading();
-  //   var res = await authRepository.login({
-  //     // "email": log_email.text.toString(),
-  //     "mobile": log_email.text.toString(),
-  //     "password": log_password.text.toString(),
-  //
-  //   });
-  //
-  //   if (res.statusCode == 201 || res.statusCode == 200) {
-  //     debugPrint("logindebug" + "200");
-  //     util.showFailProcess();
-  //
-  //     var temp = jsonDecode(res.bodyString!);
-  //
-  //     if (temp['message'].toString() == "otp not verified") {
-  //       util.showSnackBar("Alert", "${temp['message'].toString()}", true);
-  //       Get.to(Otp(log_email.text, "login"));
-  //     } else {
-  //       // util.showSnackBar("Alert", "success", true);
-  //       //goto home
-  //       log_email.text = "";
-  //       log_password.text = "";
-  //       return logindto.signUpDtoFromJson(res.bodyString!);
-  //     }
-  //
-  //     log_email.text = "";
-  //     log_password.text = "";
-  //     return null;
-  //   } else if (res.statusCode == 400) {
-  //     util.showFailProcess();
-  //     debugPrint("logindebug" + "400");
-  //     var temp = jsonDecode(res.bodyString!);
-  //     debugPrint("logresponse" + temp.toString());
-  //     var error = loginerror.loginerrorDtoFromJson(res.bodyString!);
-  //
-  //     if (error.status == 400) {
-  //       util.showSnackBar("Alert", error.messages.error.toString(), false);
-  //     } else {
-  //       util.showSnackBar("Alert", "Something went wrong!", false);
-  //     }
-  //   } else {
-  //     util.showFailProcess();
-  //     debugPrint("logindebug" + "someting wnt wrong");
-  //     util.showSnackBar("Alert", "Something went wrong!", false);
-  //     return null;
-  //   }
-  // }
-  Future<SignUpDto?> login() async {
+  /*Future<SignUpDto?> login() async {
     if (check() == false) {
       return null;
     }
@@ -190,14 +138,58 @@ class LoginController extends GetxController {
       if (error.status == 400) {
         util.showSnackBar("Alert", error.messages.error.toString(), false);
       } else {
-        util.showSnackBar("Alert Abhi 1", "Something went wrong!", false);
+        util.showSnackBar("Alert", "${error.messages.error.toString()}", false);
       }
     } else {
       util.showFailProcess();
       debugPrint("logindebug" + "someting wnt wrong");
-      util.showSnackBar("Alert", "Something went wrong!", false);
+      util.showSnackBar("Alert ", "${error.messages.error.toString()}", false);
       return null;
     }
+  }*/
+  Future<SignUpDto?> login() async {
+    if (check() == false) return null;
+
+    debugPrint("logindebug called");
+    util.startLoading();
+
+    String input = log_email.text.trim();
+    bool isEmail = input.contains('@');
+
+    var res = await authRepository.login({
+      "email": isEmail ? input : "",
+      "mobile": isEmail ? "" : input,
+      "password": log_password.text.toString(),
+    });
+
+    util.showFailProcess(); // sab case me chalega
+
+    if (res.statusCode == 200 || res.statusCode == 201) {
+      debugPrint("logindebug 200");
+      var temp = jsonDecode(res.bodyString!);
+
+      if (temp['message'].toString() == "OTP not verified. Please verify using the OTP sent to your email.") {
+        util.showSnackBar("Alert", temp['message'].toString(), true);
+        Get.to(Otp(log_email.text, "login"));
+      } else {
+        log_email.text = "";
+        log_password.text = "";
+        return logindto.signUpDtoFromJson(res.bodyString!);
+      }
+    } else {
+      debugPrint("logindebug ${res.statusCode}");
+      var temp = jsonDecode(res.bodyString!);
+      debugPrint("logresponse $temp");
+
+      // Yahan se bas direct API ka message dikhayenge
+      String msg = temp['messages']?['error']?.toString() ?? "Unknown error";
+      util.showSnackBar("Alert", msg, false);
+    }
+
+    log_email.text = "";
+    log_password.text = "";
+    return null;
   }
+
 
 }

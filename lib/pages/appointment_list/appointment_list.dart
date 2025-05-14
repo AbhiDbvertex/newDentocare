@@ -313,6 +313,7 @@
 //   }
 // }
 
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -501,7 +502,7 @@ class _AppointmentListState extends State<AppointmentList> {
                                 children: [
                                   Container(
                                     height: height * 0.05,
-                                    width: width * 0.24,
+                                    width: width * 0.26,
                                     decoration: BoxDecoration(
                                       color: containerColors[index % containerColors.length],
                                       borderRadius: BorderRadius.only(
@@ -513,6 +514,7 @@ class _AppointmentListState extends State<AppointmentList> {
                                       child: Text(
                                         item.date ?? "No Date",
                                         style: TextStyle(
+                                          fontSize: 14,
                                           fontWeight: FontWeight.w600,
                                           color: Colors.white,
                                         ),
@@ -523,7 +525,7 @@ class _AppointmentListState extends State<AppointmentList> {
                                   Container(
                                     height: 60,
                                     width: 60,
-                                    decoration: BoxDecoration(
+                                    /*decoration: BoxDecoration(
                                       image: DecorationImage(
                                         image: item.serviceData?.image != null
                                             ? NetworkImage(item.serviceData!.image!)
@@ -532,6 +534,28 @@ class _AppointmentListState extends State<AppointmentList> {
                                         fit: BoxFit.cover,
                                       ),
                                       borderRadius: BorderRadius.circular(10),
+                                    ),*/
+                                    child: ClipRRect(
+                                      borderRadius: BorderRadius.circular(12),
+                                      child: CachedNetworkImage(
+                                        // Check if nextVisitHistory exists and has items
+                                        imageUrl: item.serviceData?.image != null &&
+                                            item.serviceData!.image!.isNotEmpty
+                                            ? item.serviceData!.image! ?? ""
+                                            : "assets/newImages/noimagefound.png",
+                                        fit: BoxFit.cover,
+                                        placeholder: (context, url) => const Center(
+                                          child: CircularProgressIndicator(),
+                                        ),
+                                        errorWidget: (context, url, error) => Image.asset(
+                                          "assets/newImages/noimagefound.png", // Placeholder image
+                                          fit: BoxFit.cover,
+                                        ),
+                                        // Enable caching for faster loading
+                                        memCacheHeight: (height * 0.40).toInt(),
+                                        memCacheWidth: (width * 0.75).toInt(),
+                                        fadeInDuration: const Duration(milliseconds: 500),
+                                      ),
                                     ),
                                   ),
                                   SizedBox(width: width * 0.05),

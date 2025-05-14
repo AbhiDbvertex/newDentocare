@@ -108,6 +108,7 @@ dependencies:
   flutter_cached_pdfview:
   photo_view:
 #  geolocator: 14.0.0
+  youtube_player_flutter:
   geolocator: ^10.1.0
 
 dependency_overrides:

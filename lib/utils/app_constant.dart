@@ -367,24 +367,24 @@ class AppConstant {
 
   static void removeData(String key) => GetStorage().remove(key);
 
-  static HEADLINE_TEXT(String text, context) => GradientText(
-        text,
-        style: AppConstant.TitleFont(context),
-        gradient: LinearGradient(colors: [
-          Color.fromRGBO(30, 106, 161, 0.84),
-          Color.fromRGBO(82, 106, 236, 1),
-          Color.fromRGBO(30, 106, 161, 0.84),
-        ]),
-      );
+  // static HEADLINE_TEXT(String text, context) => GradientText(
+  //       text,
+  //       style: AppConstant.TitleFont(context),
+  //       gradient: LinearGradient(colors: [
+  //         Color.fromRGBO(30, 106, 161, 0.84),
+  //         Color.fromRGBO(82, 106, 236, 1),
+  //         Color.fromRGBO(30, 106, 161, 0.84),
+  //       ]),
+  //     );
 
-  static HEADLINE_TEXT_SERVICE(String text, context) => GradientText(
-        text,
-        style: AppConstant.TitleFontService(context),
-        gradient: LinearGradient(colors: [
-          MyColor.HEADLINE_TEXT_GRADIENT_START_COLOR,
-          MyColor.HEADLINE_TEXT_GRADIENT_END_COLOR,
-        ]),
-      );
+  // static HEADLINE_TEXT_SERVICE(String text, context) => GradientText(
+  //       text,
+  //       style: AppConstant.TitleFontService(context),
+  //       gradient: LinearGradient(colors: [
+  //         MyColor.HEADLINE_TEXT_GRADIENT_START_COLOR,
+  //         MyColor.HEADLINE_TEXT_GRADIENT_END_COLOR,
+  //       ]),
+  //     );
 
   static void save_data(String key, String val) async {
     await AppConstant.setData(key, val);

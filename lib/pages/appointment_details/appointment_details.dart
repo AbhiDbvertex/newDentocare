@@ -362,6 +362,7 @@
 //   }
 // }
 
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bounceable/flutter_bounceable.dart';
@@ -444,11 +445,33 @@ class _AppointmentDetailsState extends State<AppointmentDetails> {
                 // ),
                 // Image.network(item.serviceData?.image ?? "assets/newImages/appointmentdeails.png"),
                 Container(
-                  height: height*0.3,
+                  height: height*0.35,
                   width: double.infinity,
-                  decoration: BoxDecoration(
+                  // decoration: BoxDecoration(
+                  //   borderRadius: BorderRadius.circular(0),
+                  //   image: DecorationImage(image: NetworkImage(item.serviceData?.image ??"assets/newImages/noimagefound.png"))
+                  // ),
+                  child: ClipRRect(
                     borderRadius: BorderRadius.circular(0),
-                    image: DecorationImage(image: NetworkImage(item.serviceData?.image ??"assets/newImages/appointmentdeails.png"))
+                    child: CachedNetworkImage(
+                      // Check if nextVisitHistory exists and has items
+                      imageUrl: item.serviceData?.image != null &&
+                          item.serviceData!.image!.isNotEmpty
+                          ? item.serviceData?.image ?? ""
+                          : "assets/newImages/noimagefound.png",
+                      fit: BoxFit.cover,
+                      placeholder: (context, url) => const Center(
+                        child: CircularProgressIndicator(),
+                      ),
+                      errorWidget: (context, url, error) => Image.asset(
+                        "assets/newImages/noimagefound.png", // Placeholder image
+                        fit: BoxFit.cover,
+                      ),
+                      // Enable caching for faster loading
+                      memCacheHeight: (height * 0.40).toInt(),
+                      memCacheWidth: (width * 0.75).toInt(),
+                      fadeInDuration: const Duration(milliseconds: 500),
+                    ),
                   ),
                 ),
                 // Custom App Bar
@@ -468,7 +491,7 @@ class _AppointmentDetailsState extends State<AppointmentDetails> {
               children: [
                 Container(
                   height: height * 0.05,
-                  width: width * 0.24,
+                  width: width * 0.26,
                   decoration: BoxDecoration(
                     color: Colors.pink[200],
                     borderRadius: BorderRadius.only(
@@ -480,7 +503,7 @@ class _AppointmentDetailsState extends State<AppointmentDetails> {
                     // "25 Now",
                         widget.getitemslist.date ?? "no data",
                     style: TextStyle(
-                        fontWeight: FontWeight.w600, color: Colors.white),
+                        fontWeight: FontWeight.w600, color: Colors.white,fontSize: 14),
                   )),
                 ),
                 SizedBox(
@@ -498,56 +521,6 @@ class _AppointmentDetailsState extends State<AppointmentDetails> {
             SizedBox(
               height: height * 0.02,
             ),
-           /* DataTable(
-              border: TableBorder(
-                horizontalInside:
-                    BorderSide(color: Colors.transparent, width: 1),
-                verticalInside: BorderSide(color: Colors.transparent, width: 1),
-                top: BorderSide(color: Colors.transparent, width: 2),
-                left: BorderSide(color: Colors.transparent, width: 2),
-                right: BorderSide(color: Colors.transparent, width: 2),
-                bottom: BorderSide(color: Colors.transparent, width: 2),
-              ),
-              columns: [
-                DataColumn(
-                  label: Text(
-                    "Medicine Name",
-                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 12),
-                  ),
-                ),
-                DataColumn(
-                  label: Text(
-                    "Doses",
-                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 12),
-                  ),
-                ),
-                DataColumn(
-                  label: Text(
-                    "Time",
-                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 12),
-                  ),
-                ),
-              ],
-              rows: widget.getitemslist.prescriptions.map((row){
-
-              }),
-              // rows: medicineData.map((row) {
-              //   return DataRow(cells: [
-              //     DataCell(Text(
-              //       row["medicineName"]!,
-              //       style: TextStyle(fontWeight: FontWeight.bold, fontSize: 10),
-              //     )),
-              //     DataCell(Text(
-              //       row["doses"]!,
-              //       style: TextStyle(fontWeight: FontWeight.bold, fontSize: 10),
-              //     )),
-              //     DataCell(Text(
-              //       row["time"]!,
-              //       style: TextStyle(fontWeight: FontWeight.bold, fontSize: 10),
-              //     )),
-              //   ]);
-              // }).toList(),
-            ),*/
             DataTable(
               border: TableBorder(
                 horizontalInside: BorderSide(color: Colors.transparent, width: 1),
@@ -603,7 +576,70 @@ class _AppointmentDetailsState extends State<AppointmentDetails> {
               child: Center(child: Text("Next Visit: ${widget.getitemslist.nextVisitedDate ?? "Next Visit 12/05/25, 2 PM"} ${widget.getitemslist.nextVisitedTime ?? "2 PM"}")),
             ),
             SizedBox(
-              height: height*0.1,
+              height: height*0.01,
+            ),
+
+            Center(
+              child: Container(
+                margin: EdgeInsets.symmetric(horizontal: width * 0.00),
+                height: height * 0.40,
+                width: width * 0.75,
+                decoration: BoxDecoration(
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.grey,
+                      offset: const Offset(5.0, 5.0),
+                      blurRadius: 10.0,
+                      spreadRadius: 2.0,
+                    ),
+                    BoxShadow(
+                      color: Colors.white,
+                      offset: const Offset(0.0, 0.0),
+                      blurRadius: 0.0,
+                      spreadRadius: 0.0,
+                    ),
+                  ],
+                  borderRadius: BorderRadius.circular(20),
+                ),
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(20),
+                  child: CachedNetworkImage(
+                    // Check if nextVisitHistory exists and has items
+                    imageUrl: widget.getitemslist.nextVisitHistory != null &&
+                        widget.getitemslist.nextVisitHistory!.isNotEmpty
+                        ? widget.getitemslist.nextVisitHistory![0].fileUrl ?? ""
+                        : "assets/newImages/noimagefound.png",
+                    fit: BoxFit.cover,
+                    placeholder: (context, url) => const Center(
+                      child: CircularProgressIndicator(),
+                    ),
+                    errorWidget: (context, url, error) => Image.asset(
+                      "assets/newImages/noimagefound.png", // Placeholder image
+                      fit: BoxFit.cover,
+                    ),
+                    // Enable caching for faster loading
+                    memCacheHeight: (height * 0.40).toInt(),
+                    memCacheWidth: (width * 0.75).toInt(),
+                    fadeInDuration: const Duration(milliseconds: 500),
+                  ),
+                ),
+              ),
+            ),
+            SizedBox(
+              height: height*0.01,
+            ),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: RichText(text: TextSpan(children: [
+                TextSpan(text: 'Remark :- ',style: TextStyle(color: Colors.deepOrange[300],fontSize: 16,fontWeight: FontWeight.w500),),
+              TextSpan(text: "${widget.getitemslist.nextVisitHistory != null &&
+                  widget.getitemslist.nextVisitHistory!.isNotEmpty
+                  ? widget.getitemslist.nextVisitHistory![0].remark ?? "No remmark"
+                  : "No remark"}",style: TextStyle(color: Colors.black))
+              ],),),
+            ),
+            SizedBox(
+              height: height*0.01,
             ),
             Padding(
                 padding: const EdgeInsets.all(8.0),
@@ -638,7 +674,9 @@ class _AppointmentDetailsState extends State<AppointmentDetails> {
                       ],
                     ),
                   ),
-                )))
+                ))),SizedBox(
+              height: height*0.01,
+            ),
           ],
         ),
       ),

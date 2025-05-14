@@ -493,20 +493,20 @@ class _ProfileState extends State<Profile> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             // Member Since
-                            Padding(
-                              padding: const EdgeInsets.only(left: 10.0, top: 10.0),
-                              child: Text(
-                                "MEMBER SINCE 2016",
-                                style: TextStyle(
-                                  fontSize: AppConstant.SMALL_TEXT_SIZE,
-                                  color: Colors.grey,
-                                ),
-                              ),
-                            ),
+                            // Padding(
+                            //   padding: const EdgeInsets.only(left: 10.0, top: 10.0),
+                            //   child: Text(
+                            //     "MEMBER SINCE 2016",
+                            //     style: TextStyle(
+                            //       fontSize: AppConstant.SMALL_TEXT_SIZE,
+                            //       color: Colors.grey,
+                            //     ),
+                            //   ),
+                            // ),
 
                             // Name Field
                             Padding(
-                              padding: const EdgeInsets.only(left: 10.0, top: 10.0),
+                              padding: const EdgeInsets.only(left: 20.0, top: 20.0),
                               child: Text(
                                 AppConstant.TEXT_NAME,
                                 style: TextStyle(

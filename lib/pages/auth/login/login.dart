@@ -1387,17 +1387,18 @@ class _LoginState extends State<Login> {
                                         decoration: BoxDecoration(
                                             borderRadius:
                                             BorderRadius.circular(100),
-                                            color: Colors.red,
-                                            gradient: LinearGradient(
-                                                begin: Alignment.topCenter,
-                                                end: Alignment.bottomCenter,
-                                                colors: [
-                                                  Color.fromRGBO(151, 231, 249, 1),
-                                                  Color.fromRGBO(151, 135, 210, 1)
-                                                ])),
+                                            color: Colors.white,
+                                            // gradient: LinearGradient(
+                                            //     begin: Alignment.topCenter,
+                                            //     end: Alignment.bottomCenter,
+                                            //     colors: [
+                                            //       Color.fromRGBO(151, 231, 249, 1),
+                                            //       Color.fromRGBO(151, 135, 210, 1)
+                                            //     ])
+                                        ),
                                         child: Image.asset(
-                                          "assets/images/google.png",
-                                          scale: 1,
+                                          "assets/images/google.png",height: 2,
+                                          // scale: ,
                                         ),
                                       )),
                                   SizedBox(
