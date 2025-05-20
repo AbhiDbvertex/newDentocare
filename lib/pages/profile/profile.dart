@@ -752,6 +752,7 @@ class _ProfileState extends State<Profile> {
                                       return;
                                     }
                                     // Check if image is selected
+
                                     if (profileController.fimage1 != null) {
                                       profileController.updateprofileImage(
                                           userid!, profileController.fimage1);
