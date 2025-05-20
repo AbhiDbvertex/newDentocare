@@ -2241,6 +2241,1167 @@ class DashboardComponentContainer extends StatelessWidget {
   }
 }*/
 
+                   ///       currect code change only loading problem fix
+// import 'dart:async';
+// import 'package:carousel_slider/carousel_slider.dart';
+// import 'package:file_picker/file_picker.dart';
+// import 'package:cached_network_image/cached_network_image.dart';
+// import 'package:flutter/cupertino.dart';
+// import 'package:flutter/material.dart';
+// import 'package:flutter/services.dart';
+// import 'package:flutter_easyloading/flutter_easyloading.dart';
+// import 'package:get/get.dart';
+// import 'package:get/get_navigation/get_navigation.dart';
+// import 'package:dentocoreauth/Utills/Utills.dart';
+// import 'package:dentocoreauth/controllers/notification_controller.dart';
+// import 'package:dentocoreauth/controllers/profile_controller.dart';
+// import 'package:dentocoreauth/controllers/user_controller.dart';
+// import 'package:dentocoreauth/pages/notification/notification.dart';
+// import 'package:dentocoreauth/utils/GetXNetworkManager.dart';
+// import 'package:dentocoreauth/utils/mycolor.dart';
+// import 'package:shared_preferences/shared_preferences.dart';
+// import 'package:url_launcher/url_launcher.dart';
+// import '../../models/appointment_response.dart';
+// import '../../utils/app_constant.dart';
+// import '../Services/Services.dart';
+// import '../appointment_list/appointment_list.dart';
+// import '../book_appointment/book_appointment.dart';
+// import '../contact_us/contact_us.dart';
+// import '../payment/payment.dart';
+// import '../payment_history/payment_history.dart';
+// import '../reached_location/reached_location.dart';
+// import '../setting/settings.dart';
+// import 'package:flutter_easyloading/flutter_easyloading.dart' as myloader;
+// import '../video/video.dart';
+//
+// class Dashboard extends StatefulWidget {
+//   const Dashboard({Key? key}) : super(key: key);
+//
+//   @override
+//   State<Dashboard> createState() => _DashboardState();
+// }
+//
+// class _DashboardState extends State<Dashboard> {
+//   var user_data = [];
+//   var load_status = false;
+//   var userid = "";
+//   // var user_name = "";
+//   // RxString user_name = "".obs;
+//   var show_menu = false;
+//   var util = Utills();
+//   final NotificationController _notificationController = Get.find();
+//   var isNewNotification = false;
+//   Timer? timer;
+//   String? isFirst;
+//
+//   final statusMaps = {
+//     "0": "Pending",
+//     "1": "Rejected",
+//     "2": "Visited",
+//     "3": "Accepted",
+//     "4": "Revisited",
+//     "5": "Rescheduled",
+//     "6": "Pending",
+//   };
+//   final _networkManager = Get.find<GetXNetworkManager>();
+//   final UserController userController = Get.find();
+//   final ProfileController profileController = Get.find();
+//   final NotificationController notificationController = Get.find();
+//   var listOfGradinetColor = [
+//     AppConstant.paitent_1_bg,
+//     AppConstant.paitent_2_bg,
+//     AppConstant.paitent_3_bg,
+//     AppConstant.paitent_4_bg,
+//     AppConstant.paitent_5_bg,
+//   ];
+//
+//   final listOfStatus = [
+//     "Pending",
+//     "Rejected",
+//     "Visited",
+//     "Accepted",
+//     "Revisited",
+//     "Rescheduled",
+//     "Pending",
+//   ];
+//
+//   getNotifty() {
+//     Get.defaultDialog(
+//         radius: 20,
+//         contentPadding: EdgeInsets.all(20),
+//         title: "Alert",
+//         content: Container(
+//           width: MediaQuery.of(context).size.width,
+//           height: 100,
+//           child: Column(
+//             mainAxisAlignment: MainAxisAlignment.center,
+//             children: [
+//               Center(
+//                 child: Text("content"),
+//               ),
+//               SizedBox(height: 10),
+//               Row(
+//                 mainAxisAlignment: MainAxisAlignment.center,
+//                 children: [
+//                   MaterialButton(
+//                     onPressed: () {
+//                       Get.back();
+//                     },
+//                     child: Text("Cancel"),
+//                     color: Colors.red,
+//                   ),
+//                   SizedBox(
+//                     width: 10,
+//                   ),
+//                   MaterialButton(
+//                     onPressed: () {
+//                       Get.back();
+//                     },
+//                     child: Text("Ok"),
+//                     color: Colors.red,
+//                   ),
+//                 ],
+//               )
+//             ],
+//           ),
+//         ));
+//   }
+//
+//   Future<String> apiCallLogic() async {
+//     await userController
+//         .getAppointmentlist(userid)
+//         .then((value) => userController.getlist.refresh());
+//     return Future.value("Hello World");
+//   }
+//
+//   int _current = 0;
+//   final CarouselSliderController _controller = CarouselSliderController();
+//
+//   // void getUserData(key) async {
+//   //   final sp = await SharedPreferences.getInstance();
+//   //   setState(() {
+//   //     debugPrint("dashboardcalled");
+//   //     user_data = sp.getStringList(key)!;
+//   //     load_status = true;
+//   //     userid = user_data[0].toString();
+//   //     profileController.user_name = user_data[1].obs;
+//   //     if (userid.isNotEmpty) {
+//   //       userController
+//   //           .getAppointmentlist(userid)
+//   //           .then((value) => userController.getlist.refresh());
+//   //       setState(() {
+//   //         notificationController
+//   //             .getNotifications(userid)
+//   //             .then((value) => notificationController.getlist.refresh());
+//   //       });
+//   //
+//   //       profileController
+//   //           .getProfile(userid)
+//   //           .then((value) => profileController.image.value = value!.body.image);
+//   //     }
+//   //     checkStatus();
+//   //   });
+//   // }
+//   void getUserData(String key) async {
+//     final sp = await SharedPreferences.getInstance();
+//     final userData = sp.getStringList(key);
+//     if (userData != null && userData.isNotEmpty) {
+//       setState(() {
+//         debugPrint("dashboardcalled");
+//         user_data = userData;
+//         load_status = true;
+//         userid = user_data[0].toString();
+//         // Server se latest data fetch karo taaki SharedPreferences sync rahe
+//         profileController.getProfile(userid).then((value) {
+//           if (value != null) {
+//             print("Abhi:- getedit profile data ${value.message.toString()}");
+//             print("Abhi:- getedit profile data body: ${value.body}");
+//             // Update UI fields with latest data from getProfile
+//             profileController.user_name.value = value.body.name ?? user_data[1];
+//             //profileController._image.value = value.body.image ?? user_data[6];
+//             profileController.name_profile.text = value.body.name ?? user_data[1];
+//             profileController.email_profile.text = value.body.email ?? user_data[2];
+//             profileController.contact_profile.text = value.body.mobile ?? user_data[3];
+//           } else {
+//             util.showSnackBar("Alert", "Failed to fetch latest profile", false);
+//           }
+//           // Refresh appointments and notifications
+//           if (userid.isNotEmpty) {
+//             userController
+//                 .getAppointmentlist(userid)
+//                 .then((value) => userController.getlist.refresh());
+//             notificationController
+//                 .getNotifications(userid)
+//                 .then((value) => notificationController.getlist.refresh());
+//           }
+//           checkStatus();
+//         });
+//       });
+//     } else {
+//       util.showSnackBar("Alert", "User data not found", false);
+//       setState(() {
+//         load_status = false;
+//       });
+//     }
+//   }
+//
+//   checkStatus() {
+//     if (timer != null) {
+//       if (timer!.isActive) {
+//         timer!.cancel();
+//       }
+//     }
+//     timer = new Timer.periodic(Duration(seconds: 2), (timer) {
+//       userController.getChatStatus(userid).then((value) => {
+//         debugPrint("apicalled"),
+//       });
+//     });
+//   }
+//
+//   @override
+//   void dispose() {
+//     super.dispose();
+//     timer!.cancel();
+//
+//     if (EasyLoading.isShow) {
+//       EasyLoading.dismiss();
+//     }
+//     // EasyLoading.dismiss();
+//   }
+//
+//   void _pickFile() async {
+//     final result = await FilePicker.platform.pickFiles(allowMultiple: false);
+//     if (result == null) return;
+//     print(result.files.first.name);
+//     print(result.files.first.size);
+//     print(result.files.first.path);
+//   }
+//
+//   Dialog resheduledDialog(BuildContext context, String appointment_id,
+//       AppointmentBody? appointmentBody) {
+//     return Dialog(
+//       shape: RoundedRectangleBorder(
+//           borderRadius: BorderRadius.circular(12.0)),
+//       child: Container(
+//         child: FittedBox(
+//           child: Column(
+//             mainAxisAlignment: MainAxisAlignment.center,
+//             children: <Widget>[
+//               Padding(
+//                 padding: EdgeInsets.all(12.0),
+//                 child: Text(
+//                   'Reschedule',
+//                   style: TextStyle(
+//                       color: Colors.red,
+//                       fontWeight: FontWeight.w700,
+//                       fontSize: 18),
+//                 ),
+//               ),
+//               Padding(
+//                 padding: EdgeInsets.all(12.0),
+//                 child: Text(
+//                   'Appointment has been rescheduled.\nNew date : ${appointmentBody!.date.toString().substring(0, 10)}\nNew time : ${appointmentBody!.timeSlotData.timeSlot}',
+//                   style: TextStyle(color: Colors.black, fontSize: 14),
+//                 ),
+//               ),
+//               Padding(
+//                 padding: EdgeInsets.only(top: 12.0),
+//                 child: Text(
+//                   'Do you agree?',
+//                   style: TextStyle(color: Colors.black, fontSize: 14),
+//                 ),
+//               ),
+//               Padding(padding: EdgeInsets.only(top: 10.0)),
+//               TextButton(
+//                   onPressed: () {},
+//                   child: Row(
+//                     mainAxisAlignment: MainAxisAlignment.center,
+//                     children: [
+//                       MaterialButton(
+//                         onPressed: () {
+//                           Navigator.of(context).pop();
+//                           debugPrint("Rescheduled" + "${appointment_id}");
+//                           userController.UpdateRescheduled(appointment_id, "1")
+//                               .then((value) => {
+//                             debugPrint("njtest" + "called"),
+//                             setState(() {
+//                               userController
+//                                   .getAppointmentlist(userid)
+//                                   .then((value) => {
+//                                 userController.getlist
+//                                     .refresh(),
+//                                 userController.update(),
+//                               });
+//                             }),
+//                             setState(() {
+//                               userController
+//                                   .getAppointmentlist(userid)
+//                                   .then((value) => {
+//                                 userController.getlist
+//                                     .refresh(),
+//                                 userController.update(),
+//                               });
+//                             }),
+//                           });
+//                         },
+//                         child: Text(
+//                           "Confirm",
+//                           style: TextStyle(color: Colors.white),
+//                         ),
+//                         color: Colors.blue,
+//                       ),
+//                       SizedBox(
+//                         width: 10,
+//                       ),
+//                       MaterialButton(
+//                         onPressed: () {
+//                           Navigator.of(context).pop();
+//                           debugPrint("resheduled" + "${appointment_id}");
+//                           userController.UpdateRescheduled(appointment_id, "0")
+//                               .then((value) => {
+//                             debugPrint("njtest" + "called"),
+//                             setState(() {
+//                               userController
+//                                   .getAppointmentlist(userid)
+//                                   .then((value) => {
+//                                 userController.getlist
+//                                     .refresh(),
+//                                 userController.update(),
+//                               });
+//                             }),
+//                             setState(() {
+//                               userController
+//                                   .getAppointmentlist(userid)
+//                                   .then((value) => {
+//                                 userController.getlist
+//                                     .refresh(),
+//                                 userController.update(),
+//                               });
+//                             }),
+//                           });
+//                         },
+//                         child: Text(
+//                           "Cancel",
+//                           style: TextStyle(color: Colors.white),
+//                         ),
+//                         color: Colors.blue,
+//                       ),
+//                     ],
+//                   ))
+//             ],
+//           ),
+//         ),
+//       ),
+//     );
+//   }
+//
+//   /*Dialog errorDialog(BuildContext context) {
+//     final height = MediaQuery.of(context).size.height;
+//     final width = MediaQuery.of(context).size.width;
+//     return Dialog(
+//         shape: RoundedRectangleBorder(
+//             borderRadius: BorderRadius.circular(12.0)),
+//         child: Container(
+//           height: 466.0,
+//           width: 320.0,
+//           decoration: BoxDecoration(borderRadius: BorderRadius.circular(20)),
+//           child: Column(
+//             mainAxisAlignment: MainAxisAlignment.start,
+//             children: <Widget>[
+//               Stack(
+//                 children: [
+//                   Container(
+//                     height: 65,
+//                     width: MediaQuery.of(context).size.width,
+//                     decoration: BoxDecoration(
+//                         borderRadius: BorderRadius.only(
+//                             topLeft: Radius.circular(13),
+//                             topRight: Radius.circular(13)),
+//                         gradient: LinearGradient(
+//                           begin: Alignment.centerLeft,
+//                           end: Alignment.centerRight,
+//                           colors: [Color(0xff97e0f7), Color(0xff97a1dd)],
+//                         )),
+//                     child: Row(
+//                       children: [
+//                         Expanded(
+//                           child: Center(
+//                             child: Text(
+//                               'Tips',
+//                               style: TextStyle(
+//                                 color: Colors.white,
+//                                 fontWeight: FontWeight.w700,
+//                                 fontSize: 18,
+//                               ),
+//                             ),
+//                           ),
+//                         ),
+//                         InkWell(
+//                           onTap: () {
+//                             Get.back();
+//                           },
+//                           child: Align(
+//                             alignment: Alignment.topRight,
+//                             child: Icon(
+//                               Icons.close_rounded,
+//                               size: 28,
+//                             ),
+//                           ),
+//                         ),
+//                       ],
+//                     ),
+//                   ),
+//                 ],
+//               ),
+//               Padding(
+//                 padding: EdgeInsets.all(12.0),
+//                 child: FittedBox(
+//                   child: Text(
+//                       "${userController.gettitle ?? "Brush your teeth properly"}",
+//                       style: TextStyle(
+//                         fontSize: 20,
+//                         color: Color.fromRGBO(0, 0, 0, 1),
+//                         fontWeight: FontWeight.w400,
+//                       )),
+//                 ),
+//               ),
+//               Obx(
+//                     () => Container(
+//                   margin: EdgeInsets.symmetric(horizontal: 16),
+//                   height: height * 0.40,
+//                   width: width * 0.9,
+//                   decoration: BoxDecoration(
+//                     boxShadow: [
+//                       BoxShadow(
+//                         color: Colors.grey,
+//                         offset: const Offset(5.0, 5.0),
+//                         blurRadius: 10.0,
+//                         spreadRadius: 2.0,
+//                       ),
+//                       BoxShadow(
+//                         color: Colors.white,
+//                         offset: const Offset(0.0, 0.0),
+//                         blurRadius: 0.0,
+//                         spreadRadius: 0.0,
+//                       ),
+//                     ],
+//                     image: DecorationImage(
+//                         fit: BoxFit.fill,
+//                         image: NetworkImage(userController.getimage.value)),
+//                     borderRadius: BorderRadius.circular(20),
+//                   ),
+//                 ),
+//               ),
+//             ],
+//           ),
+//         ));
+//   }*/
+//
+//   Dialog errorDialog(BuildContext context) {
+//     final height = MediaQuery.of(context).size.height;
+//     final width = MediaQuery.of(context).size.width;
+//
+//     return Dialog(
+//       shape: RoundedRectangleBorder(
+//         borderRadius: BorderRadius.circular(12.0),
+//       ),
+//       child: Container(
+//         height: height * 0.6, // Responsive height
+//         width: width * 0.85, // Responsive width
+//         decoration: BoxDecoration(borderRadius: BorderRadius.circular(20)),
+//         child: Column(
+//           mainAxisAlignment: MainAxisAlignment.start,
+//           children: <Widget>[
+//             Stack(
+//               children: [
+//                 Container(
+//                   height: height * 0.08,
+//                   width: double.infinity,
+//                   decoration: BoxDecoration(
+//                     borderRadius: BorderRadius.only(
+//                       topLeft: Radius.circular(13),
+//                       topRight: Radius.circular(13),
+//                     ),
+//                     gradient: LinearGradient(
+//                       begin: Alignment.centerLeft,
+//                       end: Alignment.centerRight,
+//                       colors: [Color(0xff97e0f7), Color(0xff97a1dd)],
+//                     ),
+//                   ),
+//                   child: Row(
+//                     children: [
+//                       Expanded(
+//                         child: Center(
+//                           child: Text(
+//                             'Tips',
+//                             style: TextStyle(
+//                               color: Colors.white,
+//                               fontWeight: FontWeight.w700,
+//                               fontSize: width * 0.05, // Responsive font size
+//                             ),
+//                           ),
+//                         ),
+//                       ),
+//                       InkWell(
+//                         onTap: () {
+//                           Get.back();
+//                         },
+//                         child: Align(
+//                           alignment: Alignment.topRight,
+//                           child: Icon(
+//                             Icons.close_rounded,
+//                             size: width * 0.07,
+//                           ),
+//                         ),
+//                       ),
+//                     ],
+//                   ),
+//                 ),
+//               ],
+//             ),
+//             Padding(
+//               padding: EdgeInsets.all(width * 0.03),
+//               child: FittedBox(
+//                 child: Text(
+//                   "${userController.gettitle ?? "Brush your teeth properly"}",
+//                   style: TextStyle(
+//                     fontSize: width * 0.05,
+//                     color: Color.fromRGBO(0, 0, 0, 1),
+//                     fontWeight: FontWeight.w400,
+//                   ),
+//                 ),
+//               ),
+//             ),
+//             Obx(
+//                   () => Container(
+//                 margin: EdgeInsets.symmetric(horizontal: width * 0.04),
+//                 height: height * 0.40,
+//                 width: width * 0.75,
+//                 decoration: BoxDecoration(
+//                   boxShadow: [
+//                     BoxShadow(
+//                       color: Colors.grey,
+//                       offset: const Offset(5.0, 5.0),
+//                       blurRadius: 10.0,
+//                       spreadRadius: 2.0,
+//                     ),
+//                     BoxShadow(
+//                       color: Colors.white,
+//                       offset: const Offset(0.0, 0.0),
+//                       blurRadius: 0.0,
+//                       spreadRadius: 0.0,
+//                     ),
+//                   ],
+//                   borderRadius: BorderRadius.circular(20),
+//                 ),
+//                 child: ClipRRect(
+//                   borderRadius: BorderRadius.circular(20),
+//                   child: CachedNetworkImage(
+//                     imageUrl: userController.getimage.value,
+//                     fit: BoxFit.cover,
+//                     placeholder: (context, url) => Center(
+//                       child: CircularProgressIndicator(),
+//                     ),
+//                     errorWidget: (context, url, error) => Image.asset(
+//                       "assets/images/placeholder.png", // Placeholder image
+//                       fit: BoxFit.cover,
+//                     ),
+//                     // Enable caching for faster loading
+//                     memCacheHeight: (height * 0.40).toInt(),
+//                     memCacheWidth: (width * 0.75).toInt(),
+//                     fadeInDuration: Duration(milliseconds: 500),
+//                   ),
+//                 ),
+//               ),
+//             ),
+//           ],
+//         ),
+//       ),
+//     );
+//   }
+//   getBanner() {}
+//
+//   @override
+//   void initState() {
+//     super.initState();
+//     getUserData("user_data");
+//     userController.getHomeBanner();
+//     userController.getBanner().then((value) => {
+//       debugPrint("njdebug" + value!.body!.image.toString()),
+//       isFirst = AppConstant.getString("isFirst"),
+//       if (isFirst == "yes")
+//         {
+//           AppConstant.save_data("isFirst", "no"),
+//           showDialog(
+//               context: context,
+//               builder: (BuildContext context) => errorDialog(context)),
+//         }
+//     });
+//
+//     Future.delayed(Duration(milliseconds: 1000), () {
+//       if (myloader.EasyLoading.isShow) {
+//         myloader.EasyLoading.dismiss();
+//       }
+//     });
+//   }
+//
+//   Dialog changePassDialog(BuildContext context) {
+//     return Dialog(
+//         shape: RoundedRectangleBorder(
+//             borderRadius: BorderRadius.circular(12.0)),
+//         child: Container(
+//           height: 200.0,
+//           width: 200.0,
+//           child: Column(
+//             mainAxisAlignment: MainAxisAlignment.center,
+//             crossAxisAlignment: CrossAxisAlignment.center,
+//             children: <Widget>[
+//               Padding(
+//                 padding: EdgeInsets.all(12.0),
+//                 child: Text(
+//                   'Exit',
+//                   style: TextStyle(
+//                       color: Colors.black,
+//                       fontWeight: FontWeight.w700,
+//                       fontSize: 18),
+//                 ),
+//               ),
+//               Padding(
+//                 padding: EdgeInsets.all(12.0),
+//                 child: Center(
+//                   child: Text(
+//                     'D?',
+//                     style: TextStyle(color: Colors.black, fontSize: 14),
+//                   ),
+//                 ),
+//               ),
+//               Padding(padding: EdgeInsets.only(top: 20.0)),
+//               TextButton(
+//                   onPressed: () {
+//                     Navigator.of(context).pop();
+//                   },
+//                   child: Row(
+//                     mainAxisAlignment: MainAxisAlignment.center,
+//                     children: [
+//                       MaterialButton(
+//                         onPressed: () {
+//                           Navigator.of(context).pop();
+//                         },
+//                         child: Text("Ok"),
+//                         color: Colors.blue,
+//                       ),
+//                       SizedBox(
+//                         width: 10,
+//                       ),
+//                       MaterialButton(
+//                         onPressed: () {
+//                           Get.back();
+//                         },
+//                         child: Text("Cancel"),
+//                         color: Colors.blue,
+//                       ),
+//                     ],
+//                   ))
+//             ],
+//           ),
+//         ));
+//   }
+//
+//   Future<SnackBar> askBack() async {
+//     return await util.showSnackBar("Alert", "double click to exit!", false);
+//   }
+//
+//   @override
+//   Widget build(BuildContext context) {
+//     final height = MediaQuery.of(context).size.height;
+//     final width = MediaQuery.of(context).size.width;
+//     return GetBuilder<GetXNetworkManager>(builder: (builder) {
+//       if (_networkManager.connectionType == 0)
+//         return Center(
+//           child: Column(
+//             mainAxisAlignment: MainAxisAlignment.center,
+//             children: [
+//               Image.asset("assets/images/noint.jpeg"),
+//               SizedBox(
+//                 height: 10,
+//               ),
+//               Text(
+//                 "No Active Network Found!!",
+//                 style: TextStyle(fontWeight: FontWeight.bold),
+//               ),
+//             ],
+//           ),
+//         );
+//       return Scaffold(
+//         body: Column(
+//           mainAxisAlignment: MainAxisAlignment.start,
+//           children: [
+//             Container(
+//               height: height * 0.09,
+//               width: double.infinity,
+//               decoration: BoxDecoration(
+//                   color: MyColor.primarycolor,
+//                   borderRadius: BorderRadiusDirectional.only(
+//                       bottomEnd: Radius.circular(25),
+//                       bottomStart: Radius.circular(25))),
+//               child: Row(
+//                 mainAxisAlignment: MainAxisAlignment.start,
+//                 crossAxisAlignment: CrossAxisAlignment.center,
+//                 children: [
+//                   Obx(() => InkWell(
+//                     onTap: () {},
+//                     child: Container(
+//                       margin: EdgeInsets.symmetric(horizontal: 10),
+//                       child: CircleAvatar(
+//                         radius: 30,
+//                         child: Padding(
+//                           padding: const EdgeInsets.all(2.0),
+//                           child: ClipOval(
+//                               child: profileController.image.value != null
+//                                   ? CachedNetworkImage(
+//                                 imageUrl:
+//                                 profileController.image.value,
+//                                 width: 100,
+//                                 height: 100,
+//                                 fit: BoxFit.cover,
+//                                 placeholder: (context, url) =>
+//                                 new CircularProgressIndicator(),
+//                                 errorWidget: (context, url, error) =>
+//                                 new Image.asset(
+//                                     "assets/images/user.png"),
+//                               )
+//                                   : Image.asset(
+//                                   "assets/images/user_image.png")),
+//                         ),
+//                       ),
+//                     ),
+//                   )),
+//                   SizedBox(width: 8),
+//                   Obx(()=>
+//                      Expanded(
+//                       child: Text(
+//                         "Hi, ${profileController.user_name}".capitalizeFirst!,
+//                         style: TextStyle(
+//                           fontSize: 20,
+//                           fontWeight: FontWeight.w500,
+//                           color: Colors.white,
+//                         ),
+//                       ),
+//                     ),
+//                   ),
+//                   InkWell(
+//                     onTap: () {
+//                       Get.to(MyNotification());
+//                     },
+//                     child: Padding(
+//                       padding: EdgeInsets.only(right: 10),
+//                       child: Icon(
+//                         Icons.notifications_none,
+//                         color: Colors.white,
+//                         size: 30,
+//                       ),
+//                     ),
+//                   ),
+//                 ],
+//               ),
+//             ),
+//             SizedBox(
+//               height: 15,
+//             ),
+//             // Center(
+//             //   child: Text(
+//             //     "Welcome to Pearlline multispeciality dentocare".capitalizeFirst!,
+//             //     style: TextStyle(
+//             //       fontSize: 20,
+//             //       fontWeight: FontWeight.w600,
+//             //       color: Colors.red,
+//             //     ),
+//             //   ),
+//             // ),
+//             Center(
+//               child: Column(
+//                 mainAxisSize: MainAxisSize.min,
+//                 children: [
+//                   Text(
+//                     "Welcome to Pearlline",
+//                     style: TextStyle(
+//                       fontSize: 22,
+//                       fontWeight: FontWeight.w600,
+//                       color: Colors.red,
+//                     ),
+//                     textAlign: TextAlign.center,
+//                   ),
+//                   SizedBox(height: 8), // gap between the two lines
+//                   Text(
+//                     "multispeciality dentocare",
+//                     style: TextStyle(
+//                       fontSize: 22,
+//                       fontWeight: FontWeight.w600,
+//                       color: Colors.red,
+//                     ),
+//                     textAlign: TextAlign.center,
+//                   ),
+//                 ],
+//               ),
+//             ),
+//             SizedBox(
+//               height: height * 0.02,
+//             ),
+//            /* Row(
+//               mainAxisAlignment: userid.isEmpty
+//                   ? MainAxisAlignment.center
+//                   : MainAxisAlignment.spaceEvenly,
+//               children: [
+//                 DashboardComponentContainer(
+//                   onTab: () {
+//                     Get.to(Video(
+//                       backarrow: true,
+//                     ));
+//                   },
+//                   backgroundImage: "assets/newImages/homegallery.png",
+//                   titleText: 'Gallery',
+//                   imageIcon: 'assets/newImages/homegallery1.png',
+//                 ),
+//                 userid.isEmpty
+//                     ? SizedBox(width: width * 0.02,) :SizedBox(),
+//                 DashboardComponentContainer(
+//                   onTab: () {
+//                     Get.to(Services());
+//                   },
+//                   backgroundImage: "assets/newImages/ourservices.png",
+//                   titleText: 'Our\nServices',
+//                   imageIcon: 'assets/newImages/ourservices1.png',
+//                 ),
+//                 userid.isEmpty
+//                     ? SizedBox()
+//                     : DashboardComponentContainer(
+//                   onTab: () {
+//                     Get.to(Payment());
+//                   },
+//                   backgroundImage: "assets/newImages/paymenthistory.png",
+//                   titleText: 'Payment',
+//                   imageIcon: 'assets/newImages/paymenthistory1.png',
+//                 ),
+//               ],
+//             ),*/
+//             Row(
+//               mainAxisAlignment: userid.isEmpty
+//                   ? MainAxisAlignment.center
+//                   : MainAxisAlignment.spaceEvenly,
+//               children: [
+//                 DashboardComponentContainer(
+//                   onTab: () {
+//                     Get.to(Video(
+//                       backarrow: true,
+//                     ));
+//                   },
+//                   backgroundImage: "assets/newImages/homegallery.png",
+//                   titleText: 'Gallery',
+//                   imageIcon: 'assets/newImages/homegallery1.png',
+//                 ),
+//
+//                 if (userid.isEmpty)
+//                   SizedBox(width: width * 0.03),
+//
+//                 DashboardComponentContainer(
+//                   onTab: () {
+//                     Get.to(Services());
+//                   },
+//                   backgroundImage: "assets/newImages/ourservices.png",
+//                   titleText: 'Our\nServices',
+//                   imageIcon: 'assets/newImages/ourservices1.png',
+//                 ),
+//
+//                 if (userid.isNotEmpty)
+//                   DashboardComponentContainer(
+//                     onTab: () {
+//                       Get.to(Payment());
+//                     },
+//                     backgroundImage: "assets/newImages/paymenthistory.png",
+//                     titleText: 'Payment',
+//                     imageIcon: 'assets/newImages/paymenthistory1.png',
+//                   ),
+//               ],
+//             ),
+//
+//             SizedBox(
+//               height: height * 0.01,
+//             ),
+//             Row(
+//               mainAxisAlignment: userid.isEmpty
+//                   ? MainAxisAlignment.center
+//                   : MainAxisAlignment.spaceEvenly,
+//               children: [
+//                 DashboardComponentContainer(
+//                   onTab: () {
+//                     Get.to(ContactUS());
+//                   },
+//                   backgroundImage: "assets/newImages/contactus.png",
+//                   titleText: 'Contact Us',
+//                   imageIcon: 'assets/newImages/contactus1.png',
+//                 ),
+//                 userid.isEmpty
+//                     ? SizedBox(width: width * 0.03,)
+//                     : DashboardComponentContainer(
+//                   onTab: () {
+//                     Get.to(BookAppointment());
+//                   },
+//                   backgroundImage: "assets/newImages/myappointment.png",
+//                   titleText: 'Book\nAppointment',
+//                   imageIcon: 'assets/newImages/myappointment1.png',
+//                 ),
+//                 // SizedBox(
+//                 //   height: width * 0.01,
+//                 // ),
+//                 DashboardComponentContainer(
+//                   onTab: () {
+//                     ReachedLocation.openGoogleMapsRoute();
+//                   },
+//                   backgroundImage: "assets/newImages/reachus.png",
+//                   titleText: 'Reach Us',
+//                   imageIcon: 'assets/newImages/reachus1.png',
+//                 ),
+//               ],
+//             ),
+//             SizedBox(
+//               height: height * 0.0,
+//             ),
+//             Padding(
+//               padding: const EdgeInsets.symmetric(horizontal: 5.0),
+//               child: Row(
+//                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
+//                 children: [
+//                   Text(
+//                     "Dental care tips",
+//                     style: TextStyle(
+//                         color: Colors.red,
+//                         fontSize: 17,
+//                         fontWeight: FontWeight.w600),
+//                   ),
+//                   Visibility(
+//                     child: Stack(
+//                       children: [
+//                         Stack(
+//                           children: [
+//                             Stack(
+//                               children: [
+//                                 InkWell(
+//                                     onTap: () async {
+//                                       final number = "+918010201080";
+//                                       final message = "Hello Doc!!";
+//                                       var url =
+//                                           'https://wa.me/$number?text=$message';
+//                                       if (await canLaunch(url)) {
+//                                         await launch(url);
+//                                       }
+//                                     },
+//                                     child: Image.asset(
+//                                       "assets/newImages/whatsapplogo.png",
+//                                       fit: BoxFit.cover,
+//                                       scale: 2,
+//                                     ))
+//                               ],
+//                             )
+//                           ],
+//                         )
+//                       ],
+//                     ),
+//                   ),
+//                 ],
+//               ),
+//             ),
+//             Obx(() {
+//               final userController = Get.find<UserController>();
+//               if (userController.isLoading.value &&
+//                   userController.bannerItems.isEmpty) {
+//                 return const Center(child: CircularProgressIndicator());
+//               }
+//               if (userController.bannerItems.isEmpty) {
+//                 return const Center(child: Text('No banners available'));
+//               }
+//               final List<Widget> imageSliders = userController.bannerItems
+//                   .asMap()
+//                   .entries
+//                   .map((entry) {
+//                 final item = entry.value;
+//                 return Container(
+//                   margin: const EdgeInsets.all(5.0),
+//                   child: ClipRRect(
+//                     borderRadius: const BorderRadius.all(Radius.circular(5.0)),
+//                     child: Stack(
+//                       children: <Widget>[
+//                         CachedNetworkImage(
+//                           imageUrl: item.image ?? '',
+//                           fit: BoxFit.cover,
+//                           width: 1000.0,
+//                           placeholder: (context, url) =>
+//                           const Center(child: CircularProgressIndicator()),
+//                           errorWidget: (context, url, error) =>
+//                           const Icon(Icons.error),
+//                         ),
+//                         Positioned(
+//                           bottom: 0.0,
+//                           left: 0.0,
+//                           right: 0.0,
+//                           child: Container(
+//                             decoration: const BoxDecoration(
+//                               gradient: LinearGradient(
+//                                 colors: [
+//                                   Color.fromARGB(200, 0, 0, 0),
+//                                   Color.fromARGB(0, 0, 0, 0),
+//                                 ],
+//                                 begin: Alignment.bottomCenter,
+//                                 end: Alignment.topCenter,
+//                               ),
+//                             ),
+//                             padding: const EdgeInsets.symmetric(
+//                                 vertical: 10.0, horizontal: 20.0),
+//                             child: Text(
+//                               item.title ?? 'No Title',
+//                               style: const TextStyle(
+//                                 color: Colors.white,
+//                                 fontSize: 20.0,
+//                                 fontWeight: FontWeight.bold,
+//                               ),
+//                             ),
+//                           ),
+//                         ),
+//                       ],
+//                     ),
+//                   ),
+//                 );
+//               }).toList();
+//
+//               return Column(
+//                 children: [
+//                   CarouselSlider(
+//                     items: imageSliders,
+//                     carouselController: _controller,
+//                     options: CarouselOptions(
+//                       autoPlay: true,
+//                       enlargeCenterPage: true,
+//                       aspectRatio: 2.0,
+//                       onPageChanged: (index, reason) {
+//                         setState(() {
+//                           _current = index;
+//                         });
+//                       },
+//                     ),
+//                   ),
+//                   Row(
+//                     mainAxisAlignment: MainAxisAlignment.center,
+//                     children:
+//                     userController.bannerItems.asMap().entries.map((entry) {
+//                       return GestureDetector(
+//                         onTap: () => _controller.animateToPage(entry.key),
+//                         child: Container(
+//                           width: 11.0,
+//                           height: 11.0,
+//                           margin: const EdgeInsets.symmetric(
+//                               vertical: 8.0, horizontal: 4.0),
+//                           decoration: BoxDecoration(
+//                             shape: BoxShape.circle,
+//                             color: (Theme.of(context).brightness ==
+//                                 Brightness.dark
+//                                 ? Colors.white
+//                                 : Colors.black).withOpacity(
+//                                 _current == entry.key ? 0.9 : 0.4),
+//                           ),
+//                         ),
+//                       );
+//                     }).toList(),
+//                   ),
+//                 ],
+//               );
+//             })
+//           ],
+//         ),
+//       );
+//     });
+//   }
+//
+//   getFormatedDate(int i) {}
+// }
+//
+// class DashboardComponentContainer extends StatelessWidget {
+//   final VoidCallback onTab;
+//   final String backgroundImage;
+//   final String titleText;
+//   final String imageIcon;
+//
+//   const DashboardComponentContainer({
+//     Key? key,
+//     required this.onTab,
+//     required this.backgroundImage,
+//     required this.titleText,
+//     required this.imageIcon,
+//   }) : super(key: key);
+//
+//   @override
+//   Widget build(BuildContext context) {
+//     final height = MediaQuery.of(context).size.height;
+//     final width = MediaQuery.of(context).size.width;
+//
+//     return GestureDetector(
+//       onTap: onTab,
+//       child: Container(
+//         height: height * 0.156,
+//         width: width * 0.29,
+//         decoration: BoxDecoration(),
+//         child: Stack(
+//           children: [
+//             // Background image with BoxFit.contain to prevent cropping
+//             Container(
+//               // color: Colors.red,
+//               child: Image.asset(
+//                 backgroundImage,
+//                 height: height * 0.156,
+//                 width: width * 0.32,
+//                 fit: BoxFit.fill, // Changed to BoxFit.contain to prevent cropping
+//                 errorBuilder: (context, error, stackTrace) => Container(
+//                   color: Colors.grey,
+//                   child: const Center(child: Icon(Icons.error)),
+//                 ),
+//               ),
+//             ),
+//             // Title text with responsive font size
+//             Padding(
+//               padding: EdgeInsets.only(top: height * 0.02, left: height * 0.01, right: 8),
+//               child: Text(
+//                 titleText,
+//                 textAlign: TextAlign.center,
+//                 style: TextStyle(
+//                   color: Colors.white,
+//                   fontSize: width * 0.040, // Responsive font size
+//                   fontWeight: FontWeight.w600,
+//                 ),
+//               ),
+//             ),
+//             // Overlay image at the bottom-right
+//             Align(
+//               alignment: Alignment.bottomRight,
+//               child: Padding(
+//                 padding: EdgeInsets.only(bottom: height * 0.02, right: height * 0.02),
+//                 child: Image.asset(
+//                   imageIcon,
+//                   height: height * 0.024,
+//                   fit: BoxFit.contain,
+//                   errorBuilder: (context, error, stackTrace) => const Icon(
+//                     Icons.broken_image,
+//                     size: 24,
+//                     color: Colors.white,
+//                   ),
+//                 ),
+//               ),
+//             ),
+//           ],
+//         ),
+//       ),
+//     );
+//   }
+// }
+///
+
 import 'dart:async';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:file_picker/file_picker.dart';
@@ -2284,7 +3445,6 @@ class _DashboardState extends State<Dashboard> {
   var user_data = [];
   var load_status = false;
   var userid = "";
-  var user_name = "";
   var show_menu = false;
   var util = Utills();
   final NotificationController _notificationController = Get.find();
@@ -2375,30 +3535,56 @@ class _DashboardState extends State<Dashboard> {
   int _current = 0;
   final CarouselSliderController _controller = CarouselSliderController();
 
-  void getUserData(key) async {
+  void getUserData(String key) async {
     final sp = await SharedPreferences.getInstance();
-    setState(() {
-      debugPrint("dashboardcalled");
-      user_data = sp.getStringList(key)!;
-      load_status = true;
-      userid = user_data[0].toString();
-      user_name = user_data[1].toString();
-      if (userid.isNotEmpty) {
-        userController
-            .getAppointmentlist(userid)
-            .then((value) => userController.getlist.refresh());
-        setState(() {
-          notificationController
-              .getNotifications(userid)
-              .then((value) => notificationController.getlist.refresh());
+    final userData = sp.getStringList(key);
+    if (userData != null && userData.isNotEmpty) {
+      setState(() {
+        debugPrint("dashboardcalled");
+        user_data = userData;
+        load_status = true;
+        userid = user_data[0].toString();
+        // Server se latest data fetch karo taaki SharedPreferences sync rahe
+        profileController.getProfile(userid).then((value) {
+          if (value != null) {
+            print("Abhi:- getedit profile data ${value.message.toString()}");
+            print("Abhi:- getedit profile data body: ${value.body}");
+            // Update UI fields with latest data from getProfile
+            profileController.user_name.value = value.body.name ?? user_data[1];
+            profileController.name_profile.text = value.body.name ?? user_data[1];
+            profileController.email_profile.text = value.body.email ?? user_data[2];
+            profileController.contact_profile.text = value.body.mobile ?? user_data[3];
+          } else {
+            util.showSnackBar("Alert", "Failed to fetch latest profile", false);
+          }
+          // Refresh appointments and notifications
+          if (userid.isNotEmpty) {
+            userController
+                .getAppointmentlist(userid)
+                .then((value) => userController.getlist.refresh());
+            notificationController
+                .getNotifications(userid)
+                .then((value) => {
+              notificationController.getlist.refresh(),
+              // Dismiss loader after all API calls complete
+              if (myloader.EasyLoading.isShow) {
+                myloader.EasyLoading.dismiss(),
+              },
+            });
+          }
+          checkStatus();
         });
-
-        profileController
-            .getProfile(userid)
-            .then((value) => profileController.image.value = value!.body.image);
-      }
-      checkStatus();
-    });
+      });
+    } else {
+      util.showSnackBar("Alert", "User data not found", false);
+      setState(() {
+        load_status = false;
+        // Dismiss loader if no user data
+        if (myloader.EasyLoading.isShow) {
+          myloader.EasyLoading.dismiss();
+        }
+      });
+    }
   }
 
   checkStatus() {
@@ -2407,7 +3593,7 @@ class _DashboardState extends State<Dashboard> {
         timer!.cancel();
       }
     }
-    timer = new Timer.periodic(Duration(seconds: 2), (timer) {
+    timer = Timer.periodic(Duration(seconds: 2), (timer) {
       userController.getChatStatus(userid).then((value) => {
         debugPrint("apicalled"),
       });
@@ -2417,10 +3603,9 @@ class _DashboardState extends State<Dashboard> {
   @override
   void dispose() {
     super.dispose();
-    timer!.cancel();
-
-    if (EasyLoading.isShow) {
-      EasyLoading.dismiss();
+    timer?.cancel();
+    if (myloader.EasyLoading.isShow) {
+      myloader.EasyLoading.dismiss();
     }
   }
 
@@ -2550,108 +3735,6 @@ class _DashboardState extends State<Dashboard> {
     );
   }
 
-  /*Dialog errorDialog(BuildContext context) {
-    final height = MediaQuery.of(context).size.height;
-    final width = MediaQuery.of(context).size.width;
-    return Dialog(
-        shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(12.0)),
-        child: Container(
-          height: 466.0,
-          width: 320.0,
-          decoration: BoxDecoration(borderRadius: BorderRadius.circular(20)),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: <Widget>[
-              Stack(
-                children: [
-                  Container(
-                    height: 65,
-                    width: MediaQuery.of(context).size.width,
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.only(
-                            topLeft: Radius.circular(13),
-                            topRight: Radius.circular(13)),
-                        gradient: LinearGradient(
-                          begin: Alignment.centerLeft,
-                          end: Alignment.centerRight,
-                          colors: [Color(0xff97e0f7), Color(0xff97a1dd)],
-                        )),
-                    child: Row(
-                      children: [
-                        Expanded(
-                          child: Center(
-                            child: Text(
-                              'Tips',
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontWeight: FontWeight.w700,
-                                fontSize: 18,
-                              ),
-                            ),
-                          ),
-                        ),
-                        InkWell(
-                          onTap: () {
-                            Get.back();
-                          },
-                          child: Align(
-                            alignment: Alignment.topRight,
-                            child: Icon(
-                              Icons.close_rounded,
-                              size: 28,
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
-              Padding(
-                padding: EdgeInsets.all(12.0),
-                child: FittedBox(
-                  child: Text(
-                      "${userController.gettitle ?? "Brush your teeth properly"}",
-                      style: TextStyle(
-                        fontSize: 20,
-                        color: Color.fromRGBO(0, 0, 0, 1),
-                        fontWeight: FontWeight.w400,
-                      )),
-                ),
-              ),
-              Obx(
-                    () => Container(
-                  margin: EdgeInsets.symmetric(horizontal: 16),
-                  height: height * 0.40,
-                  width: width * 0.9,
-                  decoration: BoxDecoration(
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.grey,
-                        offset: const Offset(5.0, 5.0),
-                        blurRadius: 10.0,
-                        spreadRadius: 2.0,
-                      ),
-                      BoxShadow(
-                        color: Colors.white,
-                        offset: const Offset(0.0, 0.0),
-                        blurRadius: 0.0,
-                        spreadRadius: 0.0,
-                      ),
-                    ],
-                    image: DecorationImage(
-                        fit: BoxFit.fill,
-                        image: NetworkImage(userController.getimage.value)),
-                    borderRadius: BorderRadius.circular(20),
-                  ),
-                ),
-              ),
-            ],
-          ),
-        ));
-  }*/
-
   Dialog errorDialog(BuildContext context) {
     final height = MediaQuery.of(context).size.height;
     final width = MediaQuery.of(context).size.width;
@@ -2661,8 +3744,8 @@ class _DashboardState extends State<Dashboard> {
         borderRadius: BorderRadius.circular(12.0),
       ),
       child: Container(
-        height: height * 0.6, // Responsive height
-        width: width * 0.85, // Responsive width
+        height: height * 0.6,
+        width: width * 0.85,
         decoration: BoxDecoration(borderRadius: BorderRadius.circular(20)),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
@@ -2692,7 +3775,7 @@ class _DashboardState extends State<Dashboard> {
                             style: TextStyle(
                               color: Colors.white,
                               fontWeight: FontWeight.w700,
-                              fontSize: width * 0.05, // Responsive font size
+                              fontSize: width * 0.05,
                             ),
                           ),
                         ),
@@ -2758,10 +3841,9 @@ class _DashboardState extends State<Dashboard> {
                       child: CircularProgressIndicator(),
                     ),
                     errorWidget: (context, url, error) => Image.asset(
-                      "assets/images/placeholder.png", // Placeholder image
+                      "assets/images/placeholder.png",
                       fit: BoxFit.cover,
                     ),
-                    // Enable caching for faster loading
                     memCacheHeight: (height * 0.40).toInt(),
                     memCacheWidth: (width * 0.75).toInt(),
                     fadeInDuration: Duration(milliseconds: 500),
@@ -2774,11 +3856,14 @@ class _DashboardState extends State<Dashboard> {
       ),
     );
   }
+
   getBanner() {}
 
   @override
   void initState() {
     super.initState();
+    // Show loader at the start
+    myloader.EasyLoading.show(status: 'Loading...');
     getUserData("user_data");
     userController.getHomeBanner();
     userController.getBanner().then((value) => {
@@ -2790,13 +3875,9 @@ class _DashboardState extends State<Dashboard> {
           showDialog(
               context: context,
               builder: (BuildContext context) => errorDialog(context)),
-        }
-    });
-
-    Future.delayed(Duration(milliseconds: 1000), () {
-      if (myloader.EasyLoading.isShow) {
-        myloader.EasyLoading.dismiss();
-      }
+        },
+      // Dismiss loader after banner fetch
+      if (myloader.EasyLoading.isShow) {myloader.EasyLoading.dismiss()},
     });
   }
 
@@ -2914,8 +3995,7 @@ class _DashboardState extends State<Dashboard> {
                           child: ClipOval(
                               child: profileController.image.value != null
                                   ? CachedNetworkImage(
-                                imageUrl:
-                                profileController.image.value,
+                                imageUrl: profileController.image.value,
                                 width: 100,
                                 height: 100,
                                 fit: BoxFit.cover,
@@ -2932,16 +4012,16 @@ class _DashboardState extends State<Dashboard> {
                     ),
                   )),
                   SizedBox(width: 8),
-                  Expanded(
+                  Obx(() => Expanded(
                     child: Text(
-                      "Hi, ${user_name}".capitalizeFirst!,
+                      "Hi, ${profileController.user_name}".capitalizeFirst!,
                       style: TextStyle(
                         fontSize: 20,
                         fontWeight: FontWeight.w500,
                         color: Colors.white,
                       ),
                     ),
-                  ),
+                  )),
                   InkWell(
                     onTap: () {
                       Get.to(MyNotification());
@@ -2961,16 +4041,6 @@ class _DashboardState extends State<Dashboard> {
             SizedBox(
               height: 15,
             ),
-            // Center(
-            //   child: Text(
-            //     "Welcome to Pearlline multispeciality dentocare".capitalizeFirst!,
-            //     style: TextStyle(
-            //       fontSize: 20,
-            //       fontWeight: FontWeight.w600,
-            //       color: Colors.red,
-            //     ),
-            //   ),
-            // ),
             Center(
               child: Column(
                 mainAxisSize: MainAxisSize.min,
@@ -2984,7 +4054,7 @@ class _DashboardState extends State<Dashboard> {
                     ),
                     textAlign: TextAlign.center,
                   ),
-                  SizedBox(height: 8), // gap between the two lines
+                  SizedBox(height: 8),
                   Text(
                     "multispeciality dentocare",
                     style: TextStyle(
@@ -3000,43 +4070,6 @@ class _DashboardState extends State<Dashboard> {
             SizedBox(
               height: height * 0.02,
             ),
-           /* Row(
-              mainAxisAlignment: userid.isEmpty
-                  ? MainAxisAlignment.center
-                  : MainAxisAlignment.spaceEvenly,
-              children: [
-                DashboardComponentContainer(
-                  onTab: () {
-                    Get.to(Video(
-                      backarrow: true,
-                    ));
-                  },
-                  backgroundImage: "assets/newImages/homegallery.png",
-                  titleText: 'Gallery',
-                  imageIcon: 'assets/newImages/homegallery1.png',
-                ),
-                userid.isEmpty
-                    ? SizedBox(width: width * 0.02,) :SizedBox(),
-                DashboardComponentContainer(
-                  onTab: () {
-                    Get.to(Services());
-                  },
-                  backgroundImage: "assets/newImages/ourservices.png",
-                  titleText: 'Our\nServices',
-                  imageIcon: 'assets/newImages/ourservices1.png',
-                ),
-                userid.isEmpty
-                    ? SizedBox()
-                    : DashboardComponentContainer(
-                  onTab: () {
-                    Get.to(Payment());
-                  },
-                  backgroundImage: "assets/newImages/paymenthistory.png",
-                  titleText: 'Payment',
-                  imageIcon: 'assets/newImages/paymenthistory1.png',
-                ),
-              ],
-            ),*/
             Row(
               mainAxisAlignment: userid.isEmpty
                   ? MainAxisAlignment.center
@@ -3052,19 +4085,16 @@ class _DashboardState extends State<Dashboard> {
                   titleText: 'Gallery',
                   imageIcon: 'assets/newImages/homegallery1.png',
                 ),
-
-                if (userid.isEmpty)
-                  SizedBox(width: width * 0.03),
-
+                if (userid.isEmpty) SizedBox(width: width * 0.03),
                 DashboardComponentContainer(
                   onTab: () {
                     Get.to(Services());
                   },
                   backgroundImage: "assets/newImages/ourservices.png",
-                  titleText: 'Our\nServices',
+                  titleText: 'Our',
+                  titleTextSecond: 'Services',
                   imageIcon: 'assets/newImages/ourservices1.png',
                 ),
-
                 if (userid.isNotEmpty)
                   DashboardComponentContainer(
                     onTab: () {
@@ -3076,7 +4106,6 @@ class _DashboardState extends State<Dashboard> {
                   ),
               ],
             ),
-
             SizedBox(
               height: height * 0.01,
             ),
@@ -3094,18 +4123,16 @@ class _DashboardState extends State<Dashboard> {
                   imageIcon: 'assets/newImages/contactus1.png',
                 ),
                 userid.isEmpty
-                    ? SizedBox(width: width * 0.03,)
+                    ? SizedBox(width: width * 0.03)
                     : DashboardComponentContainer(
                   onTab: () {
                     Get.to(BookAppointment());
                   },
                   backgroundImage: "assets/newImages/myappointment.png",
-                  titleText: 'Book\nAppointment',
+                  titleText: 'Book',
+                  titleTextSecond: 'Appointment',
                   imageIcon: 'assets/newImages/myappointment1.png',
                 ),
-                // SizedBox(
-                //   height: width * 0.01,
-                // ),
                 DashboardComponentContainer(
                   onTab: () {
                     ReachedLocation.openGoogleMapsRoute();
@@ -3257,8 +4284,8 @@ class _DashboardState extends State<Dashboard> {
                             color: (Theme.of(context).brightness ==
                                 Brightness.dark
                                 ? Colors.white
-                                : Colors.black).withOpacity(
-                                _current == entry.key ? 0.9 : 0.4),
+                                : Colors.black)
+                                .withOpacity(_current == entry.key ? 0.9 : 0.4),
                           ),
                         ),
                       );
@@ -3280,6 +4307,7 @@ class DashboardComponentContainer extends StatelessWidget {
   final VoidCallback onTab;
   final String backgroundImage;
   final String titleText;
+  final String? titleTextSecond;
   final String imageIcon;
 
   const DashboardComponentContainer({
@@ -3288,6 +4316,7 @@ class DashboardComponentContainer extends StatelessWidget {
     required this.backgroundImage,
     required this.titleText,
     required this.imageIcon,
+    this.titleTextSecond,
   }) : super(key: key);
 
   @override
@@ -3303,21 +4332,18 @@ class DashboardComponentContainer extends StatelessWidget {
         decoration: BoxDecoration(),
         child: Stack(
           children: [
-            // Background image with BoxFit.contain to prevent cropping
             Container(
-              // color: Colors.red,
               child: Image.asset(
                 backgroundImage,
                 height: height * 0.156,
                 width: width * 0.32,
-                fit: BoxFit.fill, // Changed to BoxFit.contain to prevent cropping
+                fit: BoxFit.fill,
                 errorBuilder: (context, error, stackTrace) => Container(
                   color: Colors.grey,
                   child: const Center(child: Icon(Icons.error)),
                 ),
               ),
             ),
-            // Title text with responsive font size
             Padding(
               padding: EdgeInsets.only(top: height * 0.02, left: height * 0.01, right: 8),
               child: Text(
@@ -3325,12 +4351,22 @@ class DashboardComponentContainer extends StatelessWidget {
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   color: Colors.white,
-                  fontSize: width * 0.040, // Responsive font size
+                  fontSize: width * 0.040,
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
+            ),Padding(
+              padding: EdgeInsets.only(top: height * 0.045, left: height * 0.01, right: 8),
+              child: Text(
+                titleTextSecond ?? '',
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: width * 0.040,
                   fontWeight: FontWeight.w600,
                 ),
               ),
             ),
-            // Overlay image at the bottom-right
             Align(
               alignment: Alignment.bottomRight,
               child: Padding(

@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -18,18 +19,44 @@ class _NotificationDetailsState extends State<NotificationDetails> {
   @override
   Widget build(BuildContext context) {
     print("Abhi:- getnotfication detail pages titels : ${widget.titel} massage : ${widget.massage} appointment : ${widget.appointmentId}");
+    final height = MediaQuery.of(context).size.height;
+    final width = MediaQuery.of(context).size.width;
     return SafeArea(
       child: Scaffold(
         body: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             CustomAppBar(title: 'Notification Details'),
-            Image.network(widget.images),
+            // Image.network(widget.images),
+            Center(
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(12),
+                child: CachedNetworkImage(
+                  // Check if nextVisitHistory exists and has items
+                  imageUrl: widget.images != null &&
+                      widget.images.isNotEmpty
+                      ? widget.images! ?? ""
+                      : "assets/newImages/noimagefound.png",
+                  fit: BoxFit.cover,
+                  placeholder: (context, url) => const Center(
+                    child: CircularProgressIndicator(),
+                  ),
+                  errorWidget: (context, url, error) => Image.asset(
+                    "assets/newImages/noimagefound.png", // Placeholder image
+                    fit: BoxFit.cover,
+                  ),
+                  // Enable caching for faster loading
+                  memCacheHeight: (height * 0.40).toInt(),
+                  memCacheWidth: (width * 0.75).toInt(),
+                  fadeInDuration: const Duration(milliseconds: 500),
+                ),
+              ),
+            ),
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: Column(
                 children: [
-                  Text("Appointment - Details ${widget.appointmentId}"),
+                  // Text("Appointment - Details ${widget.appointmentId}"),
                   Row(
                     children: [
                       Text("Title : ",style: TextStyle(fontSize: 18,fontWeight: FontWeight.w600),),

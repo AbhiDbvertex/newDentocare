@@ -1735,17 +1735,19 @@ class _SettingsState extends State<Setting> {
                                   Positioned(
                                     top: 27,
                                     left: 90,
-                                    child: Row(
-                                      children: [
-                                        SizedBox(width: 13),
-                                        Text(
-                                          "Hi,${user_name ?? "user"}"
-                                              .capitalizeFirst!,
-                                          style: TextStyle(
-                                              color: Colors.white,
-                                              fontSize: 16),
-                                        )
-                                      ],
+                                    child: Obx(()=>
+                                      Row(
+                                        children: [
+                                          SizedBox(width: 13),
+                                          Text(
+                                            "Hi,${profile_controller.user_name ?? "user"}"
+                                                .capitalizeFirst!,
+                                            style: TextStyle(
+                                                color: Colors.white,
+                                                fontSize: 16),
+                                          )
+                                        ],
+                                      ),
                                     ),
                                   ),
                                 ],

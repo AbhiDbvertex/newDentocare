@@ -9,6 +9,8 @@ import 'package:dentocoreauth/data/repository/auth_repository/profile_repository
 import 'package:dentocoreauth/utils/app_constant.dart';
 import '../Utills/Utills.dart';
 import '../models/auth_model/profile_dto.dart';
+import '../pages/dashboard/dashboard.dart';
+import '../pages/homepage/MyHomePage.dart';
 
 class ProfileController extends GetxController {
   final ProfileRepository profileRepository;
@@ -21,6 +23,7 @@ class ProfileController extends GetxController {
   var email_profile = TextEditingController();
   var contact_profile = TextEditingController();
   var _image = "".obs;
+  RxString user_name = "".obs;
 
   RxString get image => _image;
   File? fimage1;
@@ -91,11 +94,13 @@ class ProfileController extends GetxController {
     });
 
     if (res.statusCode == 200 || res.statusCode == 201) {
+      print("Abhi:- print user profile data : ${res.body}");
       util.showFailProcess();
       var temp = jsonDecode(res.bodyString!);
       if (temp != null) {
         if (temp['message'].toString() != null) {
-          Get.back();
+          Get.offAll(MyHomePage());
+          // Get.back();
           util.showSnackBar("Alert", temp['message'].toString(), true);
           //
         }

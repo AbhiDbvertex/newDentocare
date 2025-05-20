@@ -50,6 +50,7 @@ class _ProfileState extends State<Profile> {
           if (value != null) {
             // util.showSnackBar("Alert", value.message.toString(), true);
             print("Abhi:- getedit profile data ${value.message.toString()}");
+            print("Abhi:- getedit profile data body : ${value.body}");
           }
         });
       });
@@ -57,6 +58,35 @@ class _ProfileState extends State<Profile> {
       util.showSnackBar("Alert", "User data not found", false);
     }
   }
+
+  // void getUserData() async {
+  //   final sp = await SharedPreferences.getInstance();
+  //   final userData = sp.getStringList("user_data");
+  //   if (userData != null && userData.isNotEmpty) {
+  //     setState(() {
+  //       userid = userData[0];
+  //       // Server se latest data fetch karo
+  //       profileController.getProfile(userid!).then((value) {
+  //         if (value != null) {
+  //           print("Abhi:- getedit profile data ${value.message.toString()}");
+  //           print("Abhi:- getedit profile data body : ${value.body}");
+  //           // UI ko refresh karo
+  //           setState(() {
+  //             // Optional: UI variables ko update karo
+  //             profileController.name_profile.text = userData[1];
+  //             profileController.email_profile.text = userData[2];
+  //             profileController.contact_profile.text = userData[3];
+  //             // profileController._image.value = userData[6];
+  //           });
+  //         } else {
+  //           util.showSnackBar("Alert", "Failed to fetch latest profile", false);
+  //         }
+  //       });
+  //     });
+  //   } else {
+  //     util.showSnackBar("Alert", "User data not found", false);
+  //   }
+  // }
 
   // Check permission status only (no request)
   Future<bool> checkPermissions(ImageSource source) async {
