@@ -2065,7 +2065,8 @@ class _NotificationState extends State<MyNotification> {
                                                     : notificationController
                                                     .getlist[i]!
                                                     .message
-                                                    .contains("Reshedule")
+                                                    // .contains("Reshedule")
+                                                    .contains("Rescheduled")
                                                     ? Column(
                                                   crossAxisAlignment:
                                                   CrossAxisAlignment
@@ -2098,7 +2099,7 @@ class _NotificationState extends State<MyNotification> {
                                                               FontWeight
                                                                   .w400,
                                                               color: Colors
-                                                                  .orange),
+                                                                  .blueAccent),
                                                         ),
                                                       ],
                                                     ),
@@ -2268,7 +2269,11 @@ class _NotificationState extends State<MyNotification> {
                                                                 color: Colors.black),
                                                           ),
                                                         ),
-                                                        Text(
+                                                     notificationController
+                                                .getlist[i]!
+                                                .message
+                                                .contains("Visited")
+                                                ?   Text(
                                                           "Visited!",
                                                           style: TextStyle(
                                                               fontSize: 15,
@@ -2276,7 +2281,7 @@ class _NotificationState extends State<MyNotification> {
                                                               color: Colors.white),
                                                           overflow: TextOverflow
                                                               .ellipsis,
-                                                        ),
+                                                        ) : SizedBox(),
                                                       ],
                                                     ),
                                                     Text(

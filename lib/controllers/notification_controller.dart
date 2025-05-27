@@ -61,7 +61,7 @@ class NotificationController extends GetxController {
       String uid) async {
     var res = await notificationRepository.getNotification(uid);
     debugPrint("nj_notification" + "called");
-    util.startLoading();
+    // util.startLoading();
     _isLoading(true);
     if (res.statusCode == 200 || res.statusCode == 201) {
       util.stopLoading();
@@ -141,9 +141,4 @@ class NotificationController extends GetxController {
       return null;
     }
   }
-
-
-
-
-
 }

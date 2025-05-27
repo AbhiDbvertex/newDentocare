@@ -57,7 +57,7 @@ class _AboutState extends State<About> {
   }
 
   Future getHtmlData(int page) async {
-    EasyLoading.show(status: 'loading...');
+  //  EasyLoading.show(status: 'loading...');
 
     var endpoint = "";
     switch (pageis) {

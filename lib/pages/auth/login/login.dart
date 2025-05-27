@@ -898,11 +898,11 @@ class _LoginState extends State<Login> {
         );
       } else {
         debugPrint("API login failed: ${value?.message}");
-        util.showSnackBar("Error", "API login failed", false);
+       // util.showSnackBar("Error", "API login failed", false);
       }
     } catch (e) {
       debugPrint("Google Sign-In Error: $e");
-      util.showSnackBar("Error", "Sign-in failed: $e", false);
+    //  util.showSnackBar("Error", "Sign-in failed: $e", false);
     } finally {
       util.stopLoading();
     }
@@ -1253,17 +1253,18 @@ class _LoginState extends State<Login> {
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
                                     Padding(
-                                      padding: EdgeInsets.only(left: width * 0.03),
+                                      padding: EdgeInsets.only(left: width * 0.05),
                                       child: Center(
                                         child: Container(
                                           width: width * 0.08,
                                           height: width * 0.08,
                                           decoration: BoxDecoration(
-                                            borderRadius: BorderRadius.circular(width * 0.2),
+                                            borderRadius: BorderRadius.circular(width * 0.4),
                                             color: Colors.white,
                                           ),
                                           child: Image.asset(
-                                            "assets/images/google.png",
+                                            // "assets/images/google.png",
+                                            "assets/newImages/googleicon2.png",
                                             fit: BoxFit.contain,
                                           ),
                                         ),

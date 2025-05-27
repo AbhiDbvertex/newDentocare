@@ -56,7 +56,7 @@ class LoginController extends GetxController {
 
       if (temp['message'].toString() == "otp not verified") {
         debugPrint("debuggoogle" + "otp not verified");
-        util.showSnackBar("Alert", "${temp['message'].toString()}", true);
+       // util.showSnackBar("Alert", "${temp['message'].toString()}", true);
         // Get.to(Otp(log_email.text, "login"));
       } else {
         debugPrint("debuggoogle" + "else");

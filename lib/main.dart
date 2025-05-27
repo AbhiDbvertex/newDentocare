@@ -661,8 +661,13 @@ class MyApp extends StatelessWidget {
           scaffoldBackgroundColor: Colors.white,
         ),
         home: const Splash() /*CarouselWithIndicatorDemo()*/,
+        // builder: (context, child) {
+        //   return EasyLoading.init()(context, child);
         builder: (context, child) {
-          return EasyLoading.init()(context, child);
+          return MediaQuery(
+            data: MediaQuery.of(context).copyWith(textScaleFactor: 1.0),
+            child: EasyLoading.init()(context, child),
+          );
         },
       ),
     );

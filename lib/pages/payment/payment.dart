@@ -182,8 +182,8 @@ class _PaymentState extends State<Payment> {
       return;
     }
     var options = {
-      // 'key': 'rzp_live_u1PQF1udlICNdx',
-      'key': 'rzp_test_yds44ayQjStCiB', // testing key add
+      'key': 'rzp_live_u1PQF1udlICNdx',
+      // 'key': 'rzp_test_yds44ayQjStCiB', // testing key add
       'amount': int.parse(amount) * 100,
       'name': 'Pearlline Dental Experts',
       'description': 'Pearlline Dental Experts payment',

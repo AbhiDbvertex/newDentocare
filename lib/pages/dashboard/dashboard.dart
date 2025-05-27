@@ -3433,6 +3433,7 @@ import '../reached_location/reached_location.dart';
 import '../setting/settings.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart' as myloader;
 import '../video/video.dart';
+import '../video/view_photos_screen.dart';
 
 class Dashboard extends StatefulWidget {
   const Dashboard({Key? key}) : super(key: key);
@@ -3567,9 +3568,9 @@ class _DashboardState extends State<Dashboard> {
                 .then((value) => {
               notificationController.getlist.refresh(),
               // Dismiss loader after all API calls complete
-              if (myloader.EasyLoading.isShow) {
-                myloader.EasyLoading.dismiss(),
-              },
+              // if (myloader.EasyLoading.isShow) {
+              //   myloader.EasyLoading.dismiss(),
+              // },
             });
           }
           checkStatus();
@@ -3580,9 +3581,9 @@ class _DashboardState extends State<Dashboard> {
       setState(() {
         load_status = false;
         // Dismiss loader if no user data
-        if (myloader.EasyLoading.isShow) {
-          myloader.EasyLoading.dismiss();
-        }
+        // if (myloader.EasyLoading.isShow) {
+        //   myloader.EasyLoading.dismiss();
+        // }
       });
     }
   }
@@ -3604,9 +3605,14 @@ class _DashboardState extends State<Dashboard> {
   void dispose() {
     super.dispose();
     timer?.cancel();
-    if (myloader.EasyLoading.isShow) {
-      myloader.EasyLoading.dismiss();
+    // if (myloader.EasyLoading.isShow) {
+    //   myloader.EasyLoading.dismiss();
+    // }
+    showSuccessProcess() {
+      EasyLoading.dismiss();
     }
+    util.startLoading().dismiss();
+
   }
 
   void _pickFile() async {
@@ -3832,21 +3838,27 @@ class _DashboardState extends State<Dashboard> {
                   ],
                   borderRadius: BorderRadius.circular(20),
                 ),
-                child: ClipRRect(
-                  borderRadius: BorderRadius.circular(20),
-                  child: CachedNetworkImage(
-                    imageUrl: userController.getimage.value,
-                    fit: BoxFit.cover,
-                    placeholder: (context, url) => Center(
-                      child: CircularProgressIndicator(),
-                    ),
-                    errorWidget: (context, url, error) => Image.asset(
-                      "assets/images/placeholder.png",
+                child: InkWell(
+                  onTap: (){
+                    Get.to(ViewPhotosScreen(images: userController.getimage.value));
+                    Get.back();
+                  },
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(20),
+                    child: CachedNetworkImage(
+                      imageUrl: userController.getimage.value,
                       fit: BoxFit.cover,
+                      placeholder: (context, url) => Center(
+                        child: CircularProgressIndicator(),
+                      ),
+                      errorWidget: (context, url, error) => Image.asset(
+                        "assets/images/placeholder.png",
+                        fit: BoxFit.cover,
+                      ),
+                      memCacheHeight: (height * 0.40).toInt(),
+                      memCacheWidth: (width * 0.75).toInt(),
+                      fadeInDuration: Duration(milliseconds: 500),
                     ),
-                    memCacheHeight: (height * 0.40).toInt(),
-                    memCacheWidth: (width * 0.75).toInt(),
-                    fadeInDuration: Duration(milliseconds: 500),
                   ),
                 ),
               ),
@@ -3859,11 +3871,13 @@ class _DashboardState extends State<Dashboard> {
 
   getBanner() {}
 
+
+
   @override
   void initState() {
     super.initState();
     // Show loader at the start
-    myloader.EasyLoading.show(status: 'Loading...');
+   // myloader.EasyLoading.show(status: 'Loading...');
     getUserData("user_data");
     userController.getHomeBanner();
     userController.getBanner().then((value) => {
@@ -3877,7 +3891,7 @@ class _DashboardState extends State<Dashboard> {
               builder: (BuildContext context) => errorDialog(context)),
         },
       // Dismiss loader after banner fetch
-      if (myloader.EasyLoading.isShow) {myloader.EasyLoading.dismiss()},
+      // if (myloader.EasyLoading.isShow) {myloader.EasyLoading.dismiss()},
     });
   }
 
@@ -4002,11 +4016,10 @@ class _DashboardState extends State<Dashboard> {
                                 placeholder: (context, url) =>
                                 new CircularProgressIndicator(),
                                 errorWidget: (context, url, error) =>
-                                new Image.asset(
-                                    "assets/images/user.png"),
+                                Container( color: Colors.white,
+                                    child: new Image.asset("assets/images/user.png")),
                               )
-                                  : Image.asset(
-                                  "assets/images/user_image.png")),
+                                  : Image.asset("assets/images/user_image.png")),
                         ),
                       ),
                     ),
@@ -4014,7 +4027,7 @@ class _DashboardState extends State<Dashboard> {
                   SizedBox(width: 8),
                   Obx(() => Expanded(
                     child: Text(
-                      "Hi, ${profileController.user_name}".capitalizeFirst!,
+                     "Hi, ${ profileController.user_name.split(' ').map((e) => e.capitalizeFirst!).join(' ')}",
                       style: TextStyle(
                         fontSize: 20,
                         fontWeight: FontWeight.w500,
@@ -4056,7 +4069,7 @@ class _DashboardState extends State<Dashboard> {
                   ),
                   SizedBox(height: 8),
                   Text(
-                    "multispeciality dentocare",
+                    "Multispeciality Dentocare",
                     style: TextStyle(
                       fontSize: 22,
                       fontWeight: FontWeight.w600,
@@ -4204,49 +4217,54 @@ class _DashboardState extends State<Dashboard> {
                   .entries
                   .map((entry) {
                 final item = entry.value;
-                return Container(
-                  margin: const EdgeInsets.all(5.0),
-                  child: ClipRRect(
-                    borderRadius: const BorderRadius.all(Radius.circular(5.0)),
-                    child: Stack(
-                      children: <Widget>[
-                        CachedNetworkImage(
-                          imageUrl: item.image ?? '',
-                          fit: BoxFit.cover,
-                          width: 1000.0,
-                          placeholder: (context, url) =>
-                          const Center(child: CircularProgressIndicator()),
-                          errorWidget: (context, url, error) =>
-                          const Icon(Icons.error),
-                        ),
-                        Positioned(
-                          bottom: 0.0,
-                          left: 0.0,
-                          right: 0.0,
-                          child: Container(
-                            decoration: const BoxDecoration(
-                              gradient: LinearGradient(
-                                colors: [
-                                  Color.fromARGB(200, 0, 0, 0),
-                                  Color.fromARGB(0, 0, 0, 0),
-                                ],
-                                begin: Alignment.bottomCenter,
-                                end: Alignment.topCenter,
+                return InkWell(
+                  onTap: (){
+                    Get.to(ViewPhotosScreen(images: item.image ?? '',));
+                  },
+                  child: Container(
+                    margin: const EdgeInsets.all(5.0),
+                    child: ClipRRect(
+                      borderRadius: const BorderRadius.all(Radius.circular(5.0)),
+                      child: Stack(
+                        children: <Widget>[
+                          CachedNetworkImage(
+                            imageUrl: item.image ?? '',
+                            fit: BoxFit.cover,
+                            width: 1000.0,
+                            placeholder: (context, url) =>
+                            const Center(child: CircularProgressIndicator()),
+                            errorWidget: (context, url, error) =>
+                            const Icon(Icons.error),
+                          ),
+                          Positioned(
+                            bottom: 0.0,
+                            left: 0.0,
+                            right: 0.0,
+                            child: Container(
+                              decoration: const BoxDecoration(
+                                gradient: LinearGradient(
+                                  colors: [
+                                    Color.fromARGB(200, 0, 0, 0),
+                                    Color.fromARGB(0, 0, 0, 0),
+                                  ],
+                                  begin: Alignment.bottomCenter,
+                                  end: Alignment.topCenter,
+                                ),
                               ),
-                            ),
-                            padding: const EdgeInsets.symmetric(
-                                vertical: 10.0, horizontal: 20.0),
-                            child: Text(
-                              item.title ?? 'No Title',
-                              style: const TextStyle(
-                                color: Colors.white,
-                                fontSize: 20.0,
-                                fontWeight: FontWeight.bold,
+                              padding: const EdgeInsets.symmetric(
+                                  vertical: 10.0, horizontal: 20.0),
+                              child: Text(
+                                item.title ?? 'No Title',
+                                style: const TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 20.0,
+                                  fontWeight: FontWeight.bold,
+                                ),
                               ),
                             ),
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
                   ),
                 );

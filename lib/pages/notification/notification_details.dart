@@ -18,7 +18,7 @@ class NotificationDetails extends StatefulWidget {
 class _NotificationDetailsState extends State<NotificationDetails> {
   @override
   Widget build(BuildContext context) {
-    print("Abhi:- getnotfication detail pages titels : ${widget.titel} massage : ${widget.massage} appointment : ${widget.appointmentId}");
+    print("Abhi:- getnotfication detail pages titels : ${widget.titel} message : ${widget.massage} appointment : ${widget.appointmentId}");
     final height = MediaQuery.of(context).size.height;
     final width = MediaQuery.of(context).size.width;
     return SafeArea(
@@ -52,41 +52,76 @@ class _NotificationDetailsState extends State<NotificationDetails> {
                 ),
               ),
             ),
+            // Padding(
+            //   padding: const EdgeInsets.all(8.0),
+            //   child: Column(
+            //     children: [
+            //       // Text("Appointment - Details ${widget.appointmentId}"),
+            //       Row(
+            //         children: [
+            //           Text("Title : ",style: TextStyle(fontSize: 18,fontWeight: FontWeight.w600),),
+            //           // Text(widget.titel,style: TextStyle(fontSize: 18,),),
+            //           Flexible(
+            //             child: Text(
+            //               widget.titel,
+            //               style: TextStyle(fontSize: 16),
+            //               softWrap: true,
+            //               overflow: TextOverflow.visible,
+            //             ),
+            //           )
+            //
+            //         ],
+            //       ),
+            //       Row(
+            //         children: [
+            //           Text("Message : ",style: TextStyle(fontSize: 16,fontWeight: FontWeight.w600),),
+            //           Flexible(child: Text(widget.massage,style: TextStyle(fontSize: 18,),overflow: TextOverflow.visible,)),
+            //         ],
+            //       ),
+            //     ],
+            //   ),
+            // ),
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  // Text("Appointment - Details ${widget.appointmentId}"),
-                  Row(
-                    children: [
-                      Text("Title : ",style: TextStyle(fontSize: 18,fontWeight: FontWeight.w600),),
-                      // Text(widget.titel,style: TextStyle(fontSize: 18,),),
-                      Flexible(
-                        child: Text(
-                          widget.titel,
-                          style: TextStyle(fontSize: 16),
-                          softWrap: true,
-                          overflow: TextOverflow.visible,
+                  // Title Row
+                  RichText(
+                    text: TextSpan(
+                      style: TextStyle(fontSize: 16, color: Colors.black),
+                      children: [
+                        TextSpan(
+                          text: "Title: ",
+                          style: TextStyle(fontWeight: FontWeight.w600, fontSize: 18),
                         ),
-                      )
-
-                    ],
+                        TextSpan(
+                          text: widget.titel,
+                          style: TextStyle(fontSize: 16),
+                        ),
+                      ],
+                    ),
                   ),
-                  Row(
-                    children: [
-                      Text("Massage : ",style: TextStyle(fontSize: 16,fontWeight: FontWeight.w600),),
-                      Flexible(child: Text(widget.massage,style: TextStyle(fontSize: 18,),overflow: TextOverflow.visible,)),
-                    ],
+                  SizedBox(height: 8),
+                  // Message Row
+                  RichText(
+                    text: TextSpan(
+                      style: TextStyle(fontSize: 16, color: Colors.black),
+                      children: [
+                        TextSpan(
+                          text: "Message: ",
+                          style: TextStyle(fontWeight: FontWeight.w600, fontSize: 18),
+                        ),
+                        TextSpan(
+                          text: widget.massage,
+                          style: TextStyle(fontSize: 16),
+                        ),
+                      ],
+                    ),
                   ),
-                  // Row(
-                  //   children: [
-                  //     Text("Appointment Date  : ",style: TextStyle(fontSize: 18,fontWeight: FontWeight.w600),),
-                  //     Text(widget.massage,style: TextStyle(fontSize: 18,),),
-                  //   ],
-                  // ),
                 ],
               ),
-            ),
+            )
           ],
         ),
       ),

@@ -371,27 +371,30 @@ class _ProfileState extends State<Profile> {
                                             ? CachedNetworkImage(
                                           imageUrl: profile_controller
                                               .image.value,
-                                          width: 100,
-                                          height: 100,
+                                          width: 103,
+                                          height: 103,
                                           fit: BoxFit.cover,
                                           placeholder: (context, url) =>
                                           new CircularProgressIndicator(),
                                           errorWidget: (context, url,
                                               error) =>
-                                          new Image.asset(
-                                              "assets/images/user.png"),
+                                          Container(
+                                            color: Colors.white,
+                                            child: new Image.asset(
+                                                "assets/images/user.png",),
+                                          ),
                                         )
                                             : Image.file(
                                           fimage1!,
-                                          width: 100,
-                                          height: 100,
-                                          cacheWidth: 100,
-                                          cacheHeight: 100,
+                                          width: 110,
+                                          height: 110,
+                                          cacheWidth: 110,
+                                          cacheHeight: 110,
                                         )),
                                   )),
                                   Positioned(
                                     bottom: 75,
-                                    right: -4,
+                                    right: 0,
                                     child: Container(
                                       child: Padding(
                                         padding: const EdgeInsets.all(2.0),

@@ -1706,30 +1706,62 @@ class _SettingsState extends State<Setting> {
                                   Positioned(
                                     top: 5,
                                     left: 15,
-                                    child: Obx(() => ClipOval(
+                                    // child: Obx(() => CircleAvatar(
+                                    //   radius: 55,
+                                    //   child: ClipOval(
+                                    //         child: fimage1 == null
+                                    //             ? CachedNetworkImage(
+                                    //                 imageUrl: profile_controller
+                                    //                     .image.value,
+                                    //                 width: 70,
+                                    //                 height: 70,
+                                    //                 fit: BoxFit.cover,
+                                    //                 cacheKey:
+                                    //                     "${profile_controller.image.value}_${DateTime.now().millisecondsSinceEpoch}",
+                                    //                 placeholder: (context, url) =>
+                                    //                     CircularProgressIndicator(),
+                                    //                 errorWidget: (context, url,
+                                    //                         error) =>
+                                    //                     Image.asset(
+                                    //                         "assets/images/user.png"),
+                                    //               )
+                                    //             : Image.file(
+                                    //                 fimage1!,
+                                    //                 width: 70,
+                                    //                 height: 70,
+                                    //                 fit: BoxFit.cover,
+                                    //               ),
+                                    //       ),
+                                    // )),
+                                  child: Obx(()=> CircleAvatar(
+                                      radius: 35,
+                                      // backgroundImage:AssetImage('assets/images/user.png'),
+                                      child: ClipOval(
                                           child: fimage1 == null
                                               ? CachedNetworkImage(
-                                                  imageUrl: profile_controller
-                                                      .image.value,
-                                                  width: 70,
-                                                  height: 70,
-                                                  fit: BoxFit.cover,
-                                                  cacheKey:
-                                                      "${profile_controller.image.value}_${DateTime.now().millisecondsSinceEpoch}",
-                                                  placeholder: (context, url) =>
-                                                      CircularProgressIndicator(),
-                                                  errorWidget: (context, url,
-                                                          error) =>
-                                                      Image.asset(
-                                                          "assets/images/user.png"),
-                                                )
+                                            imageUrl: profile_controller
+                                                .image.value,
+                                            width: 64,
+                                            height: 64,
+                                            fit: BoxFit.cover,
+                                            placeholder: (context, url) =>
+                                            new CircularProgressIndicator(),
+                                            errorWidget: (context, url,
+                                                error) =>
+                                            Container(
+                                              color: Colors.white,
+                                              child: new Image.asset(
+                                                  "assets/images/user.png"),
+                                            ),
+                                          )
                                               : Image.file(
-                                                  fimage1!,
-                                                  width: 70,
-                                                  height: 70,
-                                                  fit: BoxFit.cover,
-                                                ),
-                                        )),
+                                            fimage1!,
+                                            width: 70,
+                                            height: 70,
+                                            cacheWidth: 70,
+                                            cacheHeight: 70,
+                                          )),
+                                    )),
                                   ),
                                   // Name & Icons (Aligned with profile pic)
                                   Positioned(

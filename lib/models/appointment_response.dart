@@ -57,7 +57,7 @@ class AppointmentBody {
     description: json["description"],
     status: json["status"],
     appointmentImages: List<String>.from(json["appointment_images"].map((x) => x)),
-    timeSlotData: TimeSlotData.fromJson(json["time_slot_data"]),
+    timeSlotData: TimeSlotData.fromJson(json["time_slot_data"]?? '') ,
   );
 
   Map<String, dynamic> toJson() => {
