@@ -34,7 +34,4 @@ class AuthRepository extends GetxService {
   Future<Response> createPassword(String email,String password,String confirm_password,)async{
     return await apiClient.createPassword("/api/forget_password_post",email,password,confirm_password);
   }
-
-
-
 }

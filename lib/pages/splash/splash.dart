@@ -186,16 +186,19 @@ class _SplashState extends State<Splash> {
       child: Scaffold(
         // backgroundColor:  Color(0xE9ECE4F8),
         backgroundColor:  Color(0xFFebebeb),
-        body: Center(
-          child: _controller.value.isInitialized
-              ? AspectRatio(
-            aspectRatio: _controller.value.aspectRatio,
-            child: VideoPlayer(_controller),
-          )
-              : Container(
-            height: 180,
-            child: Image.asset(
-              'assets/newImages/applogo.png', // Fallback image jab video load ho raha ho
+        body: Padding(
+          padding: const EdgeInsets.all(0.0),
+          child: Center(
+            child: _controller.value.isInitialized
+                ? AspectRatio(
+              aspectRatio: _controller.value.aspectRatio,
+              child: VideoPlayer(_controller),
+            )
+                : Container(
+              height: 180,
+              child: Image.asset(
+                'assets/newImages/applogo.png', // Fallback image jab video load ho raha ho
+              ),
             ),
           ),
         ),
@@ -203,5 +206,4 @@ class _SplashState extends State<Splash> {
     );
   }
 }
-
 

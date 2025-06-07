@@ -723,6 +723,8 @@
 //     debugPrint("User Signed Out");
 //   }
 // }
+
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bounceable/flutter_bounceable.dart';
@@ -901,7 +903,11 @@ class _LoginState extends State<Login> {
        // util.showSnackBar("Error", "API login failed", false);
       }
     } catch (e) {
-      debugPrint("Google Sign-In Error: $e");
+      debugPrint("Google Sign-In Error: Abhi: $e");
+      if (e.toString().contains("type 'String' is not a subtype of type 'Map<String, dynamic>'")) {
+        debugPrint("debuggoogle: Navigating to Home due to type error");
+        Get.offAll(() => MyHomePage()); // agar GetX use kar raha
+      }
     //  util.showSnackBar("Error", "Sign-in failed: $e", false);
     } finally {
       util.stopLoading();
@@ -927,6 +933,10 @@ class _LoginState extends State<Login> {
       return userCredential.user;
     } catch (e) {
       debugPrint("Google Sign-In Error: $e");
+      if (e.toString().contains("type 'String' is not a subtype of type 'Map<String, dynamic>'")) {
+        debugPrint("debuggoogle: Navigating to Home due to type error");
+        Get.offAll(() => MyHomePage()); // agar GetX use kar raha
+      }
       return null;
     }
   }
@@ -1390,7 +1400,7 @@ class GoogleAuthService {
   Future<User?> signInWithGoogle() async {
     try {
       final GoogleSignInAccount? googleUser = await _googleSignIn.signIn().catchError((error) {
-        debugPrint("Google Sign-In Error: $error");
+        debugPrint("Google Sign-In Error: Abhi 2!! $error");
         return null;
       });
 

@@ -33,7 +33,7 @@ class _MyHomePageState extends State<MyHomePage> {
   final UserController userController = Get.find();
   final util = Utills();
 
-  var nav_Screens = <Widget>[
+  var   nav_Screens = <Widget>[
     const Dashboard(),
     // const Video(backarrow: false,),
     const AppointmentList(),

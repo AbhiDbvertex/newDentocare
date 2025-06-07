@@ -5,9 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bounceable/flutter_bounceable.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_html/flutter_html.dart';
-import 'package:get/get.dart';
-import 'package:get/get.dart';
-import 'package:get/get.dart';
 import 'package:dentocoreauth/Utills/Utills.dart';
 import 'package:dentocoreauth/utils/app_constant.dart';
 import 'package:http/http.dart' as http;
@@ -271,13 +268,13 @@ class _AboutState extends State<About> {
                                       ),*//*
                                   )*/
                           Container(
-                            height: 250,
+                            height: 150,
                             width: double.infinity,
                             decoration: BoxDecoration(
                               // color: Colors.blue,
                               image: DecorationImage(
-                                image: AssetImage("assets/newImages/applogo.png",),
-                                fit: BoxFit.cover,
+                                image: AssetImage("assets/newImages/applogo.png",),scale: 1,
+                              //  fit: BoxFit.cover,
                               ),
                             ),
                           ),
@@ -287,16 +284,19 @@ class _AboutState extends State<About> {
                       // SizedBox(
                       //   height: AppConstant.SMALL_TEXT_SIZE,
                       // ),
-                      Flex(
-                        direction: Axis.vertical,
-                        children:[ Container(
-                          width: 800,
-                          child: Html(data: msg),
-                        ),]
+                      Container(
+                        // color: Colors.purple,
+                        child: Flex(
+                          direction: Axis.vertical,
+                          children:[ Container(
+                            width: 800,
+                            child: Html(data: msg),
+                          ),]
+                        ),
                       ),
-                      SizedBox(
-                        height: AppConstant.LARGE_SIZE,
-                      ),
+                      // SizedBox(
+                      //   height: AppConstant.LARGE_SIZE,
+                      // ),
                     ],
                   ),
                 ),

@@ -1150,6 +1150,7 @@ import '../../controllers/profile_controller.dart';
 import '../../controllers/user_controller.dart';
 import '../../models/normalDTO.dart';
 import '../Services/Services.dart';
+import '../auth/login/login.dart'as login;
 import '../auth/login/login.dart';
 import '../change_pasword/change_password.dart';
 import '../contact_us/contact_us.dart';
@@ -1389,7 +1390,7 @@ class _SettingsState extends State<Setting> {
         var res = profile_controller.getProfile(userid);
         EasyLoading.show(status: "Loading..");
         res.then((value) {
-          EasyLoading.dismiss();
+          // EasyLoading.dismiss();
           setState(() {
             uimage = value!.body.image.toString() ?? "";
             debugPrint("testnj-${uimage}");
@@ -1421,6 +1422,7 @@ class _SettingsState extends State<Setting> {
     if (EasyLoading.isShow) {
       EasyLoading.dismiss();
     }
+
   }
 
   @override
@@ -1628,14 +1630,14 @@ class _SettingsState extends State<Setting> {
   Widget build(BuildContext context) {
     final height = MediaQuery.of(context).size.height;
     final width = MediaQuery.of(context).size.width;
-    return AnnotatedRegion<SystemUiOverlayStyle>(
-      value: SystemUiOverlayStyle(
-        statusBarColor: Colors.white,
-        statusBarIconBrightness: Brightness.light,
-        statusBarBrightness: Brightness.dark,
-        systemNavigationBarColor: MyColor.primarycolor,
-      ),
-      child: SafeArea(
+      return AnnotatedRegion<SystemUiOverlayStyle>(
+        value: SystemUiOverlayStyle(
+          statusBarColor: Colors.white,
+          statusBarIconBrightness: Brightness.light,
+          statusBarBrightness: Brightness.dark,
+          systemNavigationBarColor: MyColor.primarycolor,
+        ),
+        child: SafeArea(
         child: Scaffold(
           body: DoubleBackToCloseApp(
             snackBar: SnackBar(content: Text("Double tap to exit")),
@@ -1772,8 +1774,9 @@ class _SettingsState extends State<Setting> {
                                         children: [
                                           SizedBox(width: 13),
                                           Text(
-                                            "Hi,${profile_controller.user_name ?? "user"}"
-                                                .capitalizeFirst!,
+                                            // "Hi,${profile_controller.user_name ?? "user"}"
+                                            // "Hi, ${ profileController.user_name.split(' ').map((e) => e.capitalizeFirst!).join(' ')}"
+                                            "Hi, ${profile_controller.user_name.split(' ').map((e) => e.capitalizeFirst!).join(' ')}",
                                             style: TextStyle(
                                                 color: Colors.white,
                                                 fontSize: 16),
